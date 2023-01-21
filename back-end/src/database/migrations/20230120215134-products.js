@@ -21,7 +21,7 @@ module.exports = {
       urlImage: {
         type: DataTypes.STRING,
         allowNull: false,
-        field: 'url_image'
+        field: 'urlImage'
       }
     });
   },
