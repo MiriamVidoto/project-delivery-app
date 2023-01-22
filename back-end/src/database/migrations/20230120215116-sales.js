@@ -62,3 +62,5 @@ module.exports = {
     await queryInterface.dropTable('sales');
   }
 };
+
+// CASCADE: Atualiza ou exclui os registros da tabela filha automaticamente, ao atualizar ou excluir um registro da tabela pai.
