@@ -1,5 +1,6 @@
 import { validate } from 'email-validator';
 import React, { useState } from 'react';
+// import postRegister from '../api/register';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -13,6 +14,11 @@ export default function Register() {
       && password.length >= numberSix
       && name.length >= numberTwelve);
   };
+
+  // const createRegister = async (newRegister) => {
+  //   const newPostRegister = await postRegister(newRegister);
+  //   return newPostRegister;
+  // };
   return (
     <div>
       <label htmlFor="email">
@@ -46,6 +52,7 @@ export default function Register() {
         data-testid="common_register__button-register"
         type="button"
         disabled={ !register() }
+        onClick={ () => createRegister({ email }) }
       >
         Cadastrar
       </button>
