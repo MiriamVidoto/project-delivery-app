@@ -13,7 +13,7 @@ function Home() {
 
   useEffect(() => {
     path();
-  }, [history]);
+  });
   return (
     <div>home</div>
   );
