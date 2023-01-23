@@ -25,6 +25,10 @@ export default function Login() {
       history.push('/customer/products');
     }
   };
+
+  const register = () => {
+    history.push('/register');
+  };
   return (
     <div>
       <label htmlFor="email">
@@ -56,6 +60,7 @@ export default function Login() {
       <button
         data-testid="common_login__button-register"
         type="button"
+        onClick={ () => register() }
       >
         Ainda não tenho conta
       </button>
