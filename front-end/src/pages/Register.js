@@ -1,6 +1,6 @@
 import { validate } from 'email-validator';
 import React, { useState } from 'react';
-// import postRegister from '../api/register';
+import postRegister from '../api/register';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -15,10 +15,11 @@ export default function Register() {
       && name.length >= numberTwelve);
   };
 
-  // const createRegister = async (newRegister) => {
-  //   const newPostRegister = await postRegister(newRegister);
-  //   return newPostRegister;
-  // };
+  const createRegister = async (newRegister) => {
+    const newPostRegister = await postRegister(newRegister);
+    return newPostRegister;
+  };
+
   return (
     <div>
       <label htmlFor="email">
