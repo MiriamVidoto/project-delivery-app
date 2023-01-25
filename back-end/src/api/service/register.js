@@ -5,7 +5,7 @@ const register = async (body) => {
   if (userCreate) {
     return { status: 201, message: userCreate };
   }
-  return { status: 400, message: 'user already exists'}
+  return { status: 400, message: 'user already exists' };
 };
 
 module.exports = {
