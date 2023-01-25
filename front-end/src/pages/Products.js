@@ -1,13 +1,17 @@
 import React, { useEffect } from 'react';
+import NavBar from '../components/navbar';
 
-function Products() {  
-
-      useEffect(() => {
-        console.log('montou');
-      },[]);
+function Products() {
+  useEffect(() => {
+    console.log('montou');
+  }, []);
 
   return (
-    <div>Products</div>
+    <div>
+      <NavBar />
+      Products
+
+    </div>
   );
 }
 
