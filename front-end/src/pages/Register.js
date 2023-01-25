@@ -7,6 +7,8 @@ export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [invalid, setInvalid] = useState(false);
+
   const navigate = useHistory();
 
   const register = () => {
@@ -18,8 +20,12 @@ export default function Register() {
   };
 
   const createRegister = async (newRegister) => {
+    const created = 201;
     const newPostRegister = await postRegister(newRegister);
-    return newPostRegister && navigate.push('/customer/products');
+    if (newPostRegister.status === undefined) setInvalid(true);
+    if (newPostRegister.status === created) {
+      return newPostRegister && navigate.push('/customer/products');
+    }
   };
 
   return (
@@ -59,6 +65,11 @@ export default function Register() {
       >
         Cadastrar
       </button>
+      {invalid && (
+        <div data-testid="common_register__element-invalid_register">
+          <p>Já existe um usuário com esse nome ou e-mail.</p>
+        </div>
+      )}
     </div>
   );
 }
