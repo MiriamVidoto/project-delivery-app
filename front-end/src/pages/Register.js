@@ -1,11 +1,13 @@
 import { validate } from 'email-validator';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import postRegister from '../api/register';
 
 export default function Register() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useHistory();
 
   const register = () => {
     const numberTwelve = 12;
@@ -17,7 +19,7 @@ export default function Register() {
 
   const createRegister = async (newRegister) => {
     const newPostRegister = await postRegister(newRegister);
-    return newPostRegister;
+    return newPostRegister && navigate.push('/customer/products');
   };
 
   return (
@@ -53,7 +55,7 @@ export default function Register() {
         data-testid="common_register__button-register"
         type="button"
         disabled={ !register() }
-        onClick={ () => createRegister({ email }) }
+        onClick={ () => createRegister({ name, email, password }) }
       >
         Cadastrar
       </button>

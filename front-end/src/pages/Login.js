@@ -8,7 +8,7 @@ export default function Login() {
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
 
-  const history = useHistory();
+  const navigate = useHistory();
 
   const login = () => {
     const numberSix = 6;
@@ -22,13 +22,14 @@ export default function Login() {
       setInvalid(true);
     }
     if (newPostLogin.status === sucess) {
-      history.push('/customer/products');
+      navigate('/customer/products');
     }
   };
 
   const register = () => {
-    history.push('/register');
+    navigate.push('/register');
   };
+
   return (
     <div>
       <label htmlFor="email">

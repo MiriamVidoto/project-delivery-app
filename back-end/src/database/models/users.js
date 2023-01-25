@@ -23,7 +23,8 @@ module.exports = (sequelize) => {
     },
     role: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      defaultValue: 'customer'
     }
     }, {
       timestamps: false,

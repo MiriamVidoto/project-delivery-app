@@ -1,16 +1,13 @@
-// const { User } = require('../../database/models');
+const { User } = require('../../database/models');
 
-// const register = async (body) => {
-//   const { email, password, name } = body;
-//   const userCreate = await User.create({
-//     email, password, name
-//   });
-//   if (userCreate) {
-//     return { status: 201, message: userCreate };
-//   }
-//   return { status: 400, message: 'user already exists'}
-// };
+const register = async (body) => {
+  const userCreate = await User.create(body);
+  if (userCreate) {
+    return { status: 201, message: userCreate };
+  }
+  return { status: 400, message: 'user already exists' };
+};
 
-// module.exports = {
-//   register,
-// };
+module.exports = {
+  register,
+};
