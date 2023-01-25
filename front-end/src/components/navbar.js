@@ -12,8 +12,7 @@ export default function NavBar() {
     <header>
       <button
         type="button"
-        data-testid="customer_products__element-navbar-link-products
-        11"
+        data-testid="customer_products__element-navbar-link-products"
         onClick={ () => history.push('/products') }
       >
         Produtos
@@ -21,8 +20,7 @@ export default function NavBar() {
 
       <button
         type="button"
-        data-testid="customer_products__element-navbar-link-orders
-        12"
+        data-testid="customer_products__element-navbar-link-orders"
         onClick={ () => history.push('') }
       >
         Meus pedidos
@@ -30,8 +28,7 @@ export default function NavBar() {
 
       <button
         type="button"
-        data-testid="customer_products__element-navbar-user-full-name
-        13"
+        data-testid="customer_products__element-navbar-user-full-name"
         onClick={ () => history.push('') }
       >
         Nome cliente salvo localstorage
