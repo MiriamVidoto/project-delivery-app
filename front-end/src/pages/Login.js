@@ -30,8 +30,9 @@ export default function Login() {
 
   const handleClickButtonLogin = async (newPost) => {
     const newPostLogin = await validateLogin(newPost);
-    const { name, email, role } = newPostLogin.data;
-    const userData = { name, email, role };
+    console.log(newPostLogin);
+    const { name, email, role, token } = newPostLogin.data;
+    const userData = { name, email, role, token };
     setDataToLocalStorage('user', userData);
   };
 
