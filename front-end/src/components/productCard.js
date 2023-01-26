@@ -1,91 +1,38 @@
-import React, { useState, useMemo } from 'react';
-
-const products = [
-  {
-    id: 1,
-    name: 'Product 1',
-    // url_image: 'http://localhost:3001/images/heineken_600ml.jpg',
-    url_image: 'https://via.placeholder.com/150',
-    price: 19.99,
-  },
-  {
-    id: 2,
-    name: 'Product 2',
-    url_image: 'https://via.placeholder.com/151',
-    price: 29.99,
-  },
-  {
-    id: 3,
-    name: 'Product 3',
-    url_image: 'https://via.placeholder.com/152',
-    price: 39.99,
-  },
-  {
-    id: 4,
-    name: 'Product 4',
-    url_image: 'https://via.placeholder.com/153',
-    price: 49.99,
-  },
-  {
-    id: 5,
-    name: 'Product 5',
-    url_image: 'https://via.placeholder.com/154',
-    price: 59.99,
-  },
-  {
-    id: 6,
-    name: 'Product 6',
-    url_image: 'https://via.placeholder.com/155',
-    price: 69.99,
-  },
-  {
-    id: 7,
-    name: 'Product 7',
-    url_image: 'https://via.placeholder.com/156',
-    price: 79.99,
-  },
-  {
-    id: 8,
-    name: 'Product 8',
-    url_image: 'https://via.placeholder.com/157',
-    price: 89.99,
-  },
-  {
-    id: 9,
-    name: 'Product 9',
-    url_image: 'https://via.placeholder.com/158',
-    price: 99.99,
-  },
-  {
-    id: 10,
-    name: 'Product 10',
-    url_image: 'https://via.placeholder.com/159',
-    price: 109.99,
-  },
-  {
-    id: 11,
-    name: 'Product 11',
-    url_image: 'https://via.placeholder.com/15010',
-    price: 119.99,
-  },
-];
+import React, { useState, useEffect } from 'react';
+import getCostumerProducts from '../api/costumerProducts';
 
 function ProductCard() {
+  // const [quantities, setQuantities] = useState([]); // quantidade de produtos começa vazio
+  // const [products, setProducts] = useState([]);
+
+  // useMemo(async () => {
+  //   const products = await getCostumerProducts();
+  //   setProducts(products);
+  //   setQuantities(products.map(() => 0)); // adiciona quantities state em cada product iniciando em 0
+  // }, []); // [] define que a re-renderização vai ocorrer só quando montar
+
   const [quantities, setQuantities] = useState([]);
-  // quantidade de produtos começa vazio
+  const [products, setProducts] = useState([]);
 
-  useMemo(() => {
-    setQuantities(products.map(() => 0)); // adiciona quantities state em cada product iniciando em 0
-  }, []); // [] define que a re-renderização vai ocorrer só quando montar
-
+  useEffect(() => {
+    async function fetchData() {
+      const data = await getCostumerProducts();
+      setProducts(data);
+      setQuantities(data.map(() => 0));
+    }
+    fetchData();
+  }, []);
   return (
     <div>
 
-      {products.map((product, index) => (
+      {products?.map((product, index) => (
         <div
-          data-testid={ `customer_products__img-card-bg-image-${product.id}` }
           key={ product.id }
         >
+          <p data-testid={ `customer_products__element-card-price-${product.id}` }>
+            {product.price.replace(/\./, ',')}
+          </p>
+
           <img
             src={ product.url_image }
             alt={ product.name }
@@ -95,11 +42,6 @@ function ProductCard() {
           <h2 data-testid={ `customer_products__element-card-title-${product.id}` }>
             { product.name }
           </h2>
-
-          <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-            Price:
-            {product.price}
-          </p>
 
           {/* botões */}
 
@@ -118,21 +60,25 @@ function ProductCard() {
             disabled={ quantities[index] === 0 }
           >
             -
+
           </button>
           {/* desabilita quando chega a 0 */}
 
           <input
             data-testid={ `customer_products__input-card-quantity-${product.id}` }
             value={ quantities[index] }
-            onChange={ (e) => setQuantities(e.target.value) }
+            onChange={ (e) => {
+              const newQuantities = [...quantities];
+              newQuantities[index] = e.target.value;
+              setQuantities(newQuantities);
+            } }
           />
-          {/* add on chenge to quantitity */}
 
           {/* adds itens */}
           <button
             type="button"
             data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            onClick={ () => {
+            onChange={ () => {
               const newQuantities = [...quantities];
               newQuantities[index] += 1;
               setQuantities(newQuantities);
