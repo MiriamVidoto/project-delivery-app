@@ -37,7 +37,7 @@ export default function Login() {
           data-testid="common_login__input-email"
           name="email"
           type="email"
-          onChange={ (e) => setEmail(e.target.value) }
+          onChange={(e) => setEmail(e.target.value)}
         />
       </label>
       <label htmlFor="password">
@@ -46,21 +46,21 @@ export default function Login() {
           data-testid="common_login__input-password"
           name="password"
           type="password"
-          onChange={ (e) => setPassword(e.target.value) }
+          onChange={(e) => setPassword(e.target.value)}
         />
       </label>
       <button
         data-testid="common_login__button-login"
         type="button"
-        disabled={ !login() }
-        onClick={ () => validateLogin({ email }) }
+        disabled={!login()}
+        onClick={() => validateLogin({ email })}
       >
         Login
       </button>
       <button
         data-testid="common_login__button-register"
         type="button"
-        onClick={ () => register() }
+        onClick={() => register()}
       >
         Ainda não tenho conta
       </button>
