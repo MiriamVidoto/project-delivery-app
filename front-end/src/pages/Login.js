@@ -2,9 +2,10 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
+import setDataToLocalStorage from '../utils/localStorage';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
 
@@ -12,10 +13,10 @@ export default function Login() {
 
   const login = () => {
     const numberSix = 6;
-    return validate(email) && password.length >= numberSix;
+    return validate(userEmail) && password.length >= numberSix;
   };
 
-  const validateLogin = async (newPost) => {
+  const handleClickButtonLogin = async (newPost) => {
     const sucess = 200;
     const newPostLogin = await postLogin(newPost);
     if (newPostLogin.status === undefined) {
@@ -24,11 +25,16 @@ export default function Login() {
     if (newPostLogin.status === sucess) {
       history.push('/customer/products');
     }
+
+    const { name, email, role } = newPostLogin.data;
+    const userData = { name, email, role };
+    setDataToLocalStorage('user', userData);
   };
 
   const register = () => {
     history.push('/register');
   };
+
   return (
     <div>
       <label htmlFor="email">
@@ -53,7 +59,7 @@ export default function Login() {
         data-testid="common_login__button-login"
         type="button"
         disabled={ !login() }
-        onClick={ () => validateLogin({ email }) }
+        onClick={ () => handleClickButtonLogin({ email: userEmail }) }
       >
         Login
       </button>
