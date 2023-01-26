@@ -5,7 +5,8 @@ function ProductCard() {
     {
       id: 1,
       name: 'Product 1',
-      url_image: 'http://localhost:3001/images/heineken_600ml.jpg',
+      // url_image: 'http://localhost:3001/images/heineken_600ml.jpg',
+      url_image: 'https://via.placeholder.com/150',
       price: 19.99,
     },
     {
