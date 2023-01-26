@@ -2,7 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
-import setDataToLocalStorage from '../utils/localStorage';
+import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
   const [userEmail, setEmail] = useState('');
@@ -16,7 +16,7 @@ export default function Login() {
     return validate(userEmail) && password.length >= numberSix;
   };
 
-  const handleClickButtonLogin = async (newPost) => {
+  const validateLogin = async (newPost) => {
     const sucess = 200;
     const newPostLogin = await postLogin(newPost);
     if (newPostLogin.status === undefined) {
@@ -25,7 +25,11 @@ export default function Login() {
     if (newPostLogin.status === sucess) {
       history.push('/customer/products');
     }
+    return newPostLogin;
+  };
 
+  const handleClickButtonLogin = async (newPost) => {
+    const newPostLogin = await validateLogin(newPost);
     const { name, email, role } = newPostLogin.data;
     const userData = { name, email, role };
     setDataToLocalStorage('user', userData);

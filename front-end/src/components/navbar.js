@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 // o componente recebe dois parâmetros o nome do usuário recuperado do localStorage
 // e o path para determinar quais links deve renderizar
 // Fluxo customer tem dois links: PRODUTOS e MEUS PEDIDOS
@@ -8,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 
 export default function NavBar() {
   const history = useHistory();
+  const { name } = getDataFromLocalStorage('user');
   return (
     <header>
       <button
@@ -31,7 +33,7 @@ export default function NavBar() {
         data-testid="customer_products__element-navbar-user-full-name"
         onClick={ () => history.push('') }
       >
-        Nome cliente salvo localstorage
+        {name}
       </button>
 
       <button
