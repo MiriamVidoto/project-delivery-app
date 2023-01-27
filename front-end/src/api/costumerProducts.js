@@ -7,7 +7,7 @@ const getCostumerProducts = async () => {
   try {
     const result = await API.get('/customer/products');
     const products = result.data;
-    console.log('front api products:', products);
+    // console.log('front api products:', products);
     return products;
   } catch (error) {
     console.log(error.stack);
