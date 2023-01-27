@@ -10,7 +10,6 @@ function Products() {
     <div>
       <NavBar />
       Products
-
     </div>
   );
 }

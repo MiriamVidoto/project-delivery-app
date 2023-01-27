@@ -1,11 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { getDataFromLocalStorage } from '../utils/localStorage';
-// o componente recebe dois parâmetros o nome do usuário recuperado do localStorage
-// e o path para determinar quais links deve renderizar
-// Fluxo customer tem dois links: PRODUTOS e MEUS PEDIDOS
-// Fluxo seller tem um link: PEDIDOS
-// Falta os data tests
 
 export default function NavBar() {
   const history = useHistory();

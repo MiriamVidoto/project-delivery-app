@@ -23,16 +23,12 @@ export default function Login() {
       setInvalid(true);
     }
     if (newPostLogin.status === sucess) {
+      const { name, email, role, token } = newPostLogin.data;
+      const userData = { name, email, role, token };
+      setDataToLocalStorage('user', userData);
       history.push('/customer/products');
     }
     return newPostLogin;
-  };
-
-  const handleClickButtonLogin = async (newPost) => {
-    const newPostLogin = await validateLogin(newPost);
-    const { name, email, role, token } = newPostLogin.data;
-    const userData = { name, email, role, token };
-    setDataToLocalStorage('user', userData);
   };
 
   const register = () => {
@@ -63,7 +59,7 @@ export default function Login() {
         data-testid="common_login__button-login"
         type="button"
         disabled={ !login() }
-        onClick={ () => handleClickButtonLogin({ email: userEmail }) }
+        onClick={ () => validateLogin({ email: userEmail }) }
       >
         Login
       </button>
@@ -77,7 +73,8 @@ export default function Login() {
       {invalid && (
         <div data-testid="common_login__element-invalid-email">
           email invalido
-        </div>)}
+        </div>
+      )}
       <div>Login</div>
     </div>
   );

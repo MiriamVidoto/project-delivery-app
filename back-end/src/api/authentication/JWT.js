@@ -1,19 +1,24 @@
-const jwt =  require('jsonwebtoken');
-const { sign, verify } = jwt;
+const jwt = require("jsonwebtoken");
+const fs = require('fs');
 
-const secret = process.env.JWT_SECRET || 'seusecretdetoken';
+const secret = fs.readFileSync('jwt.evaluation.key');
 
-const createToken = (data)=> {
-  const token = sign({data}, secret, { expiresIn: '7d' });
+const jwtConfig = {
+  expiresIn: "24h",
+  algorithm: "HS256",
+};
+
+const createToken = (data) => {
+  const token = jwt.sign({ id: data.id, name: data.name }, secret, jwtConfig);
   return token;
 };
 
 const verifyToken = (token) => {
   try {
-    const { id } = verify(token, secret);
-    return id;
-  } catch {
-    return false;
+    const validate = jwt.verify(token, secret);
+    return { type: null, validate };
+  } catch(error) {
+    return { type: 404, message: { message: 'Invalid token' }};
   }
 };
 
