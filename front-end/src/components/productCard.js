@@ -2,15 +2,6 @@ import React, { useState, useEffect } from 'react';
 import getCostumerProducts from '../api/costumerProducts';
 
 function ProductCard() {
-  // const [quantities, setQuantities] = useState([]); // quantidade de produtos começa vazio
-  // const [products, setProducts] = useState([]);
-
-  // useMemo(async () => {
-  //   const products = await getCostumerProducts();
-  //   setProducts(products);
-  //   setQuantities(products.map(() => 0)); // adiciona quantities state em cada product iniciando em 0
-  // }, []); // [] define que a re-renderização vai ocorrer só quando montar
-
   const [quantities, setQuantities] = useState([]);
   const [products, setProducts] = useState([]);
 

@@ -9,8 +9,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 app.use('/images', express.static('public')); 
-app.get("/coffee", (_req, res) => res.status(418).end());
-app.post('/login', controllerLogin.login)
+app.get('/coffee', (_req, res) => res.status(418).end());
+app.post('/login', controllerLogin.login);
 app.post('/register', controllerRegister.register);
 app.get('/customer/products', controllerCostumerProducts.costumerProducts);
 
