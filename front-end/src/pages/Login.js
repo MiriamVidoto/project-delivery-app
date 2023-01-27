@@ -5,7 +5,7 @@ import postLogin from '../api/login';
 import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
-  const [email, setEmail] = useState('');
+  const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [invalid, setInvalid] = useState(false);
 
@@ -13,7 +13,7 @@ export default function Login() {
 
   const login = () => {
     const numberSix = 6;
-    return validate(email) && password.length >= numberSix;
+    return validate(userEmail) && password.length >= numberSix;
   };
 
   const redirect = (role) => {
@@ -36,11 +36,13 @@ export default function Login() {
       setDataToLocalStorage('user', newPostLogin.data);
       redirect(newPostLogin.data.role);
     }
+    return newPostLogin;
   };
 
   const register = () => {
     history.push('/register');
   };
+
   return (
     <div>
       <label htmlFor="email">
@@ -65,7 +67,7 @@ export default function Login() {
         data-testid="common_login__button-login"
         type="button"
         disabled={ !login() }
-        onClick={ () => validateLogin({ email }) }
+        onClick={ () => validateLogin({ email: userEmail }) }
       >
         Login
       </button>

@@ -1,16 +1,12 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:3001' });
-
 const postLogin = async (newLogin) => {
-  const notFound = 404;
   try {
-    const response = await API.post('/login', newLogin);
+    const response = await axios.post('http://localhost:3001/login', newLogin);
     return response;
   } catch (error) {
-    console.log(error.stack);
+    console.log(error);
   }
-  return notFound;
 };
 
 export default postLogin;

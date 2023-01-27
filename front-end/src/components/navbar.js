@@ -1,9 +1,19 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function NavBar({ path }) {
   const history = useHistory();
+  const userData = getDataFromLocalStorage('user');
+
+  const { name } = userData;
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/login');
+  };
+
   return (
     <header>
       { path === 'customer' && (
@@ -42,13 +52,13 @@ export default function NavBar({ path }) {
         data-testid="customer_products__element-navbar-user-full-name"
         onClick={ () => history.push('') }
       >
-        nome do usuário
+        {name}
       </button>
 
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => history.push('') }
+        onClick={ () => logout() }
       >
         Sair
       </button>

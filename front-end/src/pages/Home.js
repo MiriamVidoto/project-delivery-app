@@ -9,15 +9,12 @@ function Home() {
     if (!user) {
       history.push('/login');
     }
-    // adicionar else p/ /products caso tenha login e user no local no local storage
   };
 
   useEffect(() => {
     path();
   });
-  return (
-    <div>home</div>
-  );
+  return <div>home</div>;
 }
 
 export default Home;
