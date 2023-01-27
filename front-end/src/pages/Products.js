@@ -4,7 +4,6 @@ import ProductCard from '../components/productCard';
 
 function Products() {
   useEffect(() => {
-    console.log('montou Products Page');
   }, []);
 
   return (

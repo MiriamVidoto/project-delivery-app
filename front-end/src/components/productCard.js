@@ -9,10 +9,13 @@ function ProductCard() {
     async function fetchData() {
       const data = await getCostumerProducts();
       setProducts(data);
-      setQuantities(data.map(() => 0));
+      setQuantities(data.map(() => 0)); // este 0 corresponde ao estado inicial da quantidade que será exibida no app
+      // a função acima atribui a cada produto um estado local de quantities igual a 0
     }
+
     fetchData();
   }, []);
+
   return (
     <div>
       {products?.map((product, index) => (
@@ -43,8 +46,7 @@ function ProductCard() {
             onClick={ () => {
               const newQuantities = [...quantities];
               newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
-              /* impede que o numero fique negativo, definindo o máximo como 0 */
-
+              /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
               setQuantities(newQuantities);
             } }
             disabled={ quantities[index] === 0 }
@@ -56,10 +58,11 @@ function ProductCard() {
 
           <input
             data-testid={ `customer_products__input-card-quantity-${product.id}` }
+            type="number"
             value={ quantities[index] }
             onChange={ (e) => {
               const newQuantities = [...quantities];
-              newQuantities[index] = e.target.value;
+              newQuantities[index] = Number(e.target.value);
               setQuantities(newQuantities);
             } }
           />
@@ -68,7 +71,7 @@ function ProductCard() {
           <button
             type="button"
             data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            onChange={ () => {
+            onClick={ () => {
               const newQuantities = [...quantities];
               newQuantities[index] += 1;
               setQuantities(newQuantities);
