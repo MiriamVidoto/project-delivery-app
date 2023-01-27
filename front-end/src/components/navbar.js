@@ -9,7 +9,15 @@ import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function NavBar() {
   const history = useHistory();
-  const { name } = getDataFromLocalStorage('user');
+  const userData = getDataFromLocalStorage('user');
+
+  const { name } = userData;
+
+  const logout = () => {
+    localStorage.clear();
+    history.push('/login');
+  };
+
   return (
     <header>
       <button
@@ -39,7 +47,7 @@ export default function NavBar() {
       <button
         type="button"
         data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => history.push('') }
+        onClick={ () => logout() }
       >
         Sair
       </button>
