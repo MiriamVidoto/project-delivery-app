@@ -1,5 +1,6 @@
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function SellerOrders() {
   const sales = [
@@ -17,10 +18,11 @@ export default function SellerOrders() {
 
   const LIMIT = 10;
   const path = 'seller';
+  const user = getDataFromLocalStorage('user');
 
   return (
     <div>
-      <NavBar path={ path } />
+      <NavBar path={ path } name={ user.name } />
       <div className="orderCards">
         Pedidos
         {

@@ -1,5 +1,6 @@
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function SellerOrderDetails() {
   const order = {
@@ -17,13 +18,13 @@ export default function SellerOrderDetails() {
       { product: 'produto7', price: 9.99, quantity: 5 },
     ],
   };
-  const name = 'nome recuperado do localStorage';
+  const user = getDataFromLocalStorage('user');
   const path = 'seller';
   const prefix = 'seller_order_details__';
 
   return (
     <div>
-      <NavBar path={ path } name={ name } />
+      <NavBar path={ path } name={ user.name } />
       <div>
         <h1>Detalhe do pedido</h1>
         <div>

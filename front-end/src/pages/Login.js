@@ -16,6 +16,14 @@ export default function Login() {
     return validate(email) && password.length >= numberSix;
   };
 
+  const setLocalStorage = (data) => {
+    const newData = { name: data.name,
+      email: data.email,
+      role: data.role,
+      token: data.password };
+    setDataToLocalStorage('user', newData);
+  };
+
   const redirect = (role) => {
     if (role === 'customer') {
       history.push('/customer/products');
@@ -33,7 +41,7 @@ export default function Login() {
     const newPostLogin = await postLogin(newPost);
     if (newPostLogin.status === undefined) setInvalid(true);
     if (newPostLogin.status === sucess) {
-      setDataToLocalStorage('user', newPostLogin.data);
+      setLocalStorage(newPostLogin.data);
       redirect(newPostLogin.data.role);
     }
   };
