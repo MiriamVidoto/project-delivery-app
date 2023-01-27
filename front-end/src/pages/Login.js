@@ -16,12 +16,22 @@ export default function Login() {
     return validate(userEmail) && password.length >= numberSix;
   };
 
+  const redirect = (role) => {
+    if (role === 'customer') {
+      history.push('/customer/products');
+    }
+    if (role === 'seller') {
+      history.push('/seller/orders');
+    }
+    if (role === 'administrator') {
+      history.push('/admin/manage');
+    }
+  };
+
   const validateLogin = async (newPost) => {
     const sucess = 200;
     const newPostLogin = await postLogin(newPost);
-    if (newPostLogin.status === undefined) {
-      setInvalid(true);
-    }
+    if (newPostLogin.status === undefined) setInvalid(true);
     if (newPostLogin.status === sucess) {
       const { name, email, role, token } = newPostLogin.data;
       const userData = { name, email, role, token };

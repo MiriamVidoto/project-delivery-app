@@ -1,11 +1,11 @@
-const jwt = require("jsonwebtoken");
+const jwt = require('jsonwebtoken');
 const fs = require('fs');
 
 const secret = fs.readFileSync('jwt.evaluation.key');
 
 const jwtConfig = {
-  expiresIn: "24h",
-  algorithm: "HS256",
+  expiresIn: '24h',
+  algorithm: 'HS256',
 };
 
 const createToken = (data) => {
@@ -17,8 +17,8 @@ const verifyToken = (token) => {
   try {
     const validate = jwt.verify(token, secret);
     return { type: null, validate };
-  } catch(error) {
-    return { type: 404, message: { message: 'Invalid token' }};
+  } catch (error) {
+    return { type: 404, message: { message: 'Invalid token' } };
   }
 };
 
