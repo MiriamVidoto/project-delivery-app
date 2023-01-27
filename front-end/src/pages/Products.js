@@ -18,7 +18,6 @@ function Products() {
       <NavBar path="customer" />
       Products
 
-
     </div>
   );
 }
