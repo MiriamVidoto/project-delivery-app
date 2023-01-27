@@ -1,37 +1,48 @@
+import PropTypes from 'prop-types';
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-// o componente recebe dois parâmetros o nome do usuário recuperado do localStorage
-// e o path para determinar quais links deve renderizar
-// Fluxo customer tem dois links: PRODUTOS e MEUS PEDIDOS
-// Fluxo seller tem um link: PEDIDOS
-// Falta os data tests
+import { useHistory, Link } from 'react-router-dom';
 
-export default function NavBar() {
+export default function NavBar({ path }) {
   const history = useHistory();
   return (
     <header>
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-link-products"
-        onClick={ () => history.push('/products') }
-      >
-        Produtos
-      </button>
-
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-link-orders"
-        onClick={ () => history.push('') }
-      >
-        Meus pedidos
-      </button>
-
+      { path === 'customer' && (
+        <>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-products"
+            onClick={ () => history.push('/products') }
+          >
+            Produtos
+          </button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-orders"
+            onClick={ () => history.push('') }
+          >
+            Meus pedidos
+          </button>
+        </>
+      ) }
+      { path === 'seller' && (
+        <Link
+          to="/seller/orders"
+          data-testid="customer_products__element-navbar-link-orders"
+        >
+          PEDIDOS
+        </Link>
+      )}
+      { path === 'admin' && (
+        <span data-testid="customer_products__element-navbar-link-orders">
+          GERENCIAR USUÁRIOS
+        </span>
+      )}
       <button
         type="button"
         data-testid="customer_products__element-navbar-user-full-name"
         onClick={ () => history.push('') }
       >
-        Nome cliente salvo localstorage
+        nome do usuário
       </button>
 
       <button
@@ -44,3 +55,7 @@ export default function NavBar() {
     </header>
   );
 }
+
+NavBar.propTypes = {
+  path: PropTypes.string.isRequired,
+};

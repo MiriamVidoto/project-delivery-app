@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
+import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -15,14 +16,25 @@ export default function Login() {
     return validate(email) && password.length >= numberSix;
   };
 
+  const redirect = (role) => {
+    if (role === 'customer') {
+      history.push('/customer/products');
+    }
+    if (role === 'seller') {
+      history.push('/seller/orders');
+    }
+    if (role === 'administrator') {
+      history.push('/admin/manage');
+    }
+  };
+
   const validateLogin = async (newPost) => {
     const sucess = 200;
     const newPostLogin = await postLogin(newPost);
-    if (newPostLogin.status === undefined) {
-      setInvalid(true);
-    }
+    if (newPostLogin.status === undefined) setInvalid(true);
     if (newPostLogin.status === sucess) {
-      history.push('/customer/products');
+      setDataToLocalStorage('user', newPostLogin.data);
+      redirect(newPostLogin.data.role);
     }
   };
 
@@ -68,7 +80,6 @@ export default function Login() {
         <div data-testid="common_login__element-invalid-email">
           email invalido
         </div>)}
-      <div>Login</div>
     </div>
   );
 }
