@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
+import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -15,21 +16,25 @@ export default function Login() {
     return validate(email) && password.length >= numberSix;
   };
 
-  const validateLogin = async (newPost) => {
-    // const sucess = 200;
-    const newPostLogin = await postLogin(newPost);
-    console.log(newPostLogin.data.role);
-    if (newPostLogin.status === undefined) {
-      setInvalid(true);
-    }
-    if (newPostLogin.data.role === 'customer') {
+  const redirect = (role) => {
+    if (role === 'customer') {
       history.push('/customer/products');
     }
-    if (newPostLogin.data.role === 'seller') {
+    if (role === 'seller') {
       history.push('/seller/orders');
     }
-    if (newPostLogin.data.role === 'administrator') {
+    if (role === 'administrator') {
       history.push('/admin/manage');
+    }
+  };
+
+  const validateLogin = async (newPost) => {
+    const sucess = 200;
+    const newPostLogin = await postLogin(newPost);
+    if (newPostLogin.status === undefined) setInvalid(true);
+    if (newPostLogin.status === sucess) {
+      setDataToLocalStorage('user', newPostLogin.data);
+      redirect(newPostLogin.data.role);
     }
   };
 

@@ -8,7 +8,7 @@ function Products() {
 
   return (
     <div>
-      <NavBar />
+      <NavBar path="customer" />
       Products
 
     </div>
