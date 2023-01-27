@@ -9,11 +9,16 @@ function Products() {
 
   return (
     <div>
+
       <div>
-        <NavBar />
         <h1>Products Page</h1>
       </div>
       <ProductCard />
+
+      <NavBar path="customer" />
+      Products
+
+
     </div>
   );
 }
