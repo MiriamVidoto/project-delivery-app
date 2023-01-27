@@ -33,10 +33,15 @@ export default function Login() {
     const newPostLogin = await postLogin(newPost);
     if (newPostLogin.status === undefined) setInvalid(true);
     if (newPostLogin.status === sucess) {
+<<<<<<< HEAD
       const { name, email, role, token } = newPostLogin.data;
       const userData = { name, email, role, token };
       setDataToLocalStorage('user', userData);
       history.push('/customer/products');
+=======
+      setDataToLocalStorage('user', newPostLogin.data);
+      redirect(newPostLogin.data.role);
+>>>>>>> 84005b25e775916c26e6a16d1a23345ec5001717
     }
     return newPostLogin;
   };
@@ -83,9 +88,13 @@ export default function Login() {
       {invalid && (
         <div data-testid="common_login__element-invalid-email">
           email invalido
+<<<<<<< HEAD
         </div>
       )}
       <div>Login</div>
+=======
+        </div>)}
+>>>>>>> 84005b25e775916c26e6a16d1a23345ec5001717
     </div>
   );
 }
