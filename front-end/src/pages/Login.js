@@ -16,13 +16,20 @@ export default function Login() {
   };
 
   const validateLogin = async (newPost) => {
-    const sucess = 200;
+    // const sucess = 200;
     const newPostLogin = await postLogin(newPost);
+    console.log(newPostLogin.data.role);
     if (newPostLogin.status === undefined) {
       setInvalid(true);
     }
-    if (newPostLogin.status === sucess) {
+    if (newPostLogin.data.role === 'customer') {
       history.push('/customer/products');
+    }
+    if (newPostLogin.data.role === 'seller') {
+      history.push('/seller/orders');
+    }
+    if (newPostLogin.data.role === 'administrator') {
+      history.push('/admin/manage');
     }
   };
 
@@ -68,7 +75,6 @@ export default function Login() {
         <div data-testid="common_login__element-invalid-email">
           email invalido
         </div>)}
-      <div>Login</div>
     </div>
   );
 }
