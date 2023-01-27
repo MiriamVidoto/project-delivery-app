@@ -1,12 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-<<<<<<< HEAD
-import { useHistory } from 'react-router-dom';
-import { getDataFromLocalStorage } from '../utils/localStorage';
-=======
-import { getDataFromLocalStorage } from '../utils/localStorage';
 import { useHistory, Link } from 'react-router-dom';
->>>>>>> 84005b25e775916c26e6a16d1a23345ec5001717
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function NavBar({ path }) {
   const history = useHistory();
