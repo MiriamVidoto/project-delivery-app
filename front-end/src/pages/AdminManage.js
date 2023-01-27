@@ -1,5 +1,5 @@
 import { validate } from 'email-validator';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/navbar';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 import postRegisterAdmin from '../api/adminRegister';
@@ -8,10 +8,21 @@ export default function AdminManage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('Vendedor');
   const [response, setResponse] = useState('');
 
   const user = getDataFromLocalStorage('user');
+
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setRole('Vendedor');
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [response]);
 
   const register = () => {
     const minLengthName = 12;
@@ -26,8 +37,8 @@ export default function AdminManage() {
     const data = { newRegister: { name, email, password, role }, tokenAdmin: user.token };
     const created = 201;
     const responseRegister = await postRegisterAdmin(data);
-    if (responseRegister.status === undefined) setResponse('nao deu');
-    if (responseRegister.status === created) setResponse('nao deu');
+    if (responseRegister.status !== created) setResponse('erro!');
+    if (responseRegister.status === created) setResponse('Usuário criado com sucesso!');
   };
 
   return (
@@ -42,6 +53,7 @@ export default function AdminManage() {
             type="text"
             placeholder="Nome e sobrenome"
             name="name"
+            value={ name }
             onChange={ (e) => setName(e.target.value) }
           />
         </label>
@@ -52,6 +64,7 @@ export default function AdminManage() {
             type="text"
             placeholder="seu-email@site.com.br"
             name="email"
+            value={ email }
             onChange={ (e) => setEmail(e.target.value) }
           />
         </label>
@@ -62,6 +75,7 @@ export default function AdminManage() {
             type="password"
             placeholder="**********"
             name="password"
+            value={ password }
             onChange={ (e) => setPassword(e.target.value) }
           />
         </label>
@@ -70,6 +84,7 @@ export default function AdminManage() {
           <select
             name="tipo"
             data-testid="admin_manage__select-role"
+            value={ role }
             onChange={ (e) => setRole(e.target.value) }
           >
             <option value="seller">Vendedor</option>

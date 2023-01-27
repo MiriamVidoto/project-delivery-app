@@ -1,5 +1,5 @@
 const crypto = require('crypto');
-const service = require('../service/adminRegister.js');
+const service = require('../service/adminRegister');
 
 const adminRegister = async (req, res) => {
   const { newRegister, tokenAdmin } = req.body;
@@ -9,5 +9,5 @@ const adminRegister = async (req, res) => {
 };
 
 module.exports = {
-  register,
+  adminRegister,
 };

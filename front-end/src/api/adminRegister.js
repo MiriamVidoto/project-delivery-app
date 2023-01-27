@@ -6,6 +6,7 @@ const postRegisterAdmin = async (data) => {
   const created = 201;
   try {
     const response = await API.post('/admin/register', data);
+    console.log(response);
     return response;
   } catch (error) {
     console.log(error.stack);

@@ -9,13 +9,13 @@ const adminRegister = async (password, data) => {
     raw: true,
   });
 
-  const validateToken = await User.findOne({
-    where: { password },
-    attributes: ['password', 'role'],
-    raw: true,
-  });
+  // const validateToken = await User.findOne({
+  //   where: { password },
+  //   attributes: ['password', 'role'],
+  //   raw: true,
+  // });
 
-  if (!user && !validateToken) {
+  if (!user) {
   const userCreate = await User.create(data);
   return { status: 201, message: userCreate };
   }
@@ -23,5 +23,5 @@ const adminRegister = async (password, data) => {
 };
 
 module.exports = {
-  register,
+  adminRegister,
 };
