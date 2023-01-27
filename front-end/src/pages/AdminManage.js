@@ -1,7 +1,22 @@
-import React from 'react';
+import { validate } from 'email-validator';
+import React, { useState } from 'react';
 import NavBar from '../components/navbar';
 
 export default function AdminManage() {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+
+  const register = () => {
+    const minLengthName = 12;
+    const minLengthPassword = 6;
+    return (validate(email)
+      && password.length >= minLengthPassword
+      && name.length >= minLengthName
+      && role.length !== '');
+  };
+
   return (
     <div>
       <NavBar path="admin" />
@@ -14,6 +29,7 @@ export default function AdminManage() {
             type="text"
             placeholder="Nome e sobrenome"
             name="name"
+            onChange={ (e) => setName(e.target.value) }
           />
         </label>
         <label htmlFor="email">
@@ -23,20 +39,26 @@ export default function AdminManage() {
             type="text"
             placeholder="seu-email@site.com.br"
             name="email"
+            onChange={ (e) => setEmail(e.target.value) }
           />
         </label>
-        <label htmlFor="senha">
+        <label htmlFor="password">
           Senha
           <input
             data-testid="admin_manage__input-password"
-            type="text"
+            type="password"
             placeholder="**********"
-            name="senha"
+            name="password"
+            onChange={ (e) => setPassword(e.target.value) }
           />
         </label>
         <label htmlFor="tipo">
           Tipo
-          <select name="tipo" data-testid="admin_manage__select-role">
+          <select
+            name="tipo"
+            data-testid="admin_manage__select-role"
+            onChange={ (e) => setRole(e.target.value) }
+          >
             <option value="seller">Vendedor</option>
             <option value="customer">Cliente</option>
             <option value="admin">Administrador</option>
@@ -45,6 +67,7 @@ export default function AdminManage() {
         <button
           type="submit"
           data-testid="admin_manage__button-register"
+          disabled={ !register() }
         >
           Cadastrar
         </button>
