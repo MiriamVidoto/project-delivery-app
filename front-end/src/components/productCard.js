@@ -24,7 +24,6 @@ function ProductCard() {
   }, []);
   return (
     <div>
-
       {products?.map((product, index) => (
         <div
           key={ product.id }
@@ -34,7 +33,7 @@ function ProductCard() {
           </p>
 
           <img
-            src={ product.url_image }
+            src={ product.urlImage }
             alt={ product.name }
             data-testid={ `customer_products__img-card-bg-image-${product.id}` }
           />
