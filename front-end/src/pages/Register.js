@@ -22,8 +22,8 @@ export default function Register() {
   const createRegister = async (newRegister) => {
     const created = 201;
     const newPostRegister = await postRegister(newRegister);
-    if (newPostRegister.status === undefined) setInvalid(true);
-    if (newPostRegister.status === created) {
+    if (newPostRegister === undefined) setInvalid(true);
+    else if (newPostRegister.status === created) {
       return newPostRegister && navigate.push('/customer/products');
     }
   };

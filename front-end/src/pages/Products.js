@@ -6,7 +6,6 @@ function Products() {
   const user = getDataFromLocalStorage('user');
 
   useEffect(() => {
-    console.log('montou Products Page');
   }, []);
 
   return (
