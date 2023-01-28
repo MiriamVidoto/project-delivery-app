@@ -10,6 +10,7 @@ export default function AdminManage() {
   const [password, setPassword] = useState('');
   const [role, setRole] = useState('Vendedor');
   const [response, setResponse] = useState('');
+  const [reset, setReset] = useState(false);
 
   const user = getDataFromLocalStorage('user');
 
@@ -22,7 +23,7 @@ export default function AdminManage() {
 
   useEffect(() => {
     resetForm();
-  }, [response]);
+  }, [reset]);
 
   const register = () => {
     const minLengthName = 12;
@@ -37,8 +38,9 @@ export default function AdminManage() {
     const data = { newRegister: { name, email, password, role }, tokenAdmin: user.token };
     const created = 201;
     const responseRegister = await postRegisterAdmin(data);
-    if (responseRegister.status !== created) setResponse('erro!');
+    if (responseRegister.status !== created) setResponse('ERRO!');
     if (responseRegister.status === created) setResponse('Usuário criado com sucesso!');
+    setReset(!reset);
   };
 
   return (
