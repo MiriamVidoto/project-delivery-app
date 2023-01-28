@@ -10,7 +10,7 @@ const adminRegister = async (token, data) => {
 
   if (adm.role !== 'administrator') return { status: 401, message: 'Unauthorized' };
 
-  const { name, email, } = data;
+  const { name, email } = data;
   const user = await User.findOne({
     where: { name, email },
     attributes: ['name', 'email'],
