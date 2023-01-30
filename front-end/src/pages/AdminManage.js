@@ -38,8 +38,8 @@ export default function AdminManage() {
     if (role === 'Vendedor') setRole('seller');
     if (role === 'Cliente') setRole('customer');
     if (role === 'Administrador') setRole('administrator');
-    const data = { newRegister: { name, email, password, role }, tokenAdmin: user.token };
-    const responseRegister = await postRegisterAdmin(data);
+    const data = { newRegister: { name, email, password, role } };
+    const responseRegister = await postRegisterAdmin(data, user.token);
     if (!responseRegister) setResponse('ERRO!');
     if (responseRegister) setResponse('Usuário criado com sucesso!');
     setReset(!reset);
