@@ -1,8 +1,8 @@
 const { Sale } = require('../../database/models');
 
 const checkoutSale = async (data) => {
-  const sales = await Sale.create(data);
-  if(sales) return { status: 201, message: userCreate }
+  const newSale = await Sale.create(data);
+  if (newSale) return { status: 201, message: newSale };
   return { status: 409, message: 'Conflict' };
 };
 

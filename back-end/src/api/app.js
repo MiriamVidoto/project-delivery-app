@@ -4,7 +4,7 @@ const controllerLogin = require('./controller/login');
 const controllerRegister = require('./controller/register');
 const controllerAdminRegister = require('./controller/adminRegister');
 const controllerCostumerProducts = require('./controller/costumerProducts');
-const controllerSellerOrders  = require('./controller/sellerOrders');
+const controllerSellerOrders = require('./controller/sellerOrders');
 const controllerCheckoutSale = require('./controller/checkoutSale');
 
 const app = express();
