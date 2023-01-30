@@ -2,7 +2,7 @@ import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
-export default function SellerOrderDetails() {
+export default function CustomerOrderDetails() {
   const order = {
     id: 1,
     user_id: 3,
@@ -19,8 +19,8 @@ export default function SellerOrderDetails() {
     ],
   };
   const user = getDataFromLocalStorage('user');
-  const path = 'seller';
-  const prefix = 'seller_order_details__';
+  const path = 'customer';
+  const prefix = 'customer_order_details__';
 
   return (
     <div>
@@ -39,15 +39,9 @@ export default function SellerOrderDetails() {
           </span>
           <button
             type="button"
-            data-testid={ `${prefix}button-preparing-check` }
+            data-testid={ `${prefix}button-delivery-check` }
           >
-            Preparar Pedido
-          </button>
-          <button
-            type="button"
-            data-testid={ `${prefix}button-dispatch-check` }
-          >
-            Saiu para entrega
+            MARCAR COMO ENTREGUE
           </button>
         </div>
       </div>

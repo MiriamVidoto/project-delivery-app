@@ -1,13 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { getDataFromLocalStorage } from '../utils/localStorage';
 
-export default function NavBar({ path }) {
+export default function NavBar({ path, name }) {
   const history = useHistory();
-  const userData = getDataFromLocalStorage('user');
-
-  const { name } = userData;
 
   const logout = () => {
     localStorage.clear();
@@ -68,4 +64,5 @@ export default function NavBar({ path }) {
 
 NavBar.propTypes = {
   path: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
 };
