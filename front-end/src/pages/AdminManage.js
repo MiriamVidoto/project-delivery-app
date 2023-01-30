@@ -36,10 +36,9 @@ export default function AdminManage() {
 
   const createRegisterByAdmin = async () => {
     const data = { newRegister: { name, email, password, role }, tokenAdmin: user.token };
-    const created = 201;
     const responseRegister = await postRegisterAdmin(data);
-    if (responseRegister.status !== created) setResponse('ERRO!');
-    if (responseRegister.status === created) setResponse('Usuário criado com sucesso!');
+    if (!responseRegister) setResponse('ERRO!');
+    if (responseRegister) setResponse('Usuário criado com sucesso!');
     setReset(!reset);
   };
 

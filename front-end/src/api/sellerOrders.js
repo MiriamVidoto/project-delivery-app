@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const API = axios.create({ baseURL: 'http://localhost:3001' });
 
-const postRegisterAdmin = async (data) => {
+const getSellerOrders = async (id) => {
   try {
-    const response = await API.post('/admin/register', data);
-    return response;
+    const response = await API.post('/seller/orders', id);
+    return response.message;
   } catch (error) {
     console.log('catch', error.stack);
   }
 };
 
-export default postRegisterAdmin;
+export default getSellerOrders;
