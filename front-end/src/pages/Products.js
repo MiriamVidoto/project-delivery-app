@@ -12,10 +12,11 @@ function Products() {
       <div>
         <h1>Products Page</h1>
       </div>
-      <ProductCard />
 
       <NavBar path="customer" />
-      Products
+      <h2>Products</h2>
+
+      <ProductCard />
     </div>
   );
 }

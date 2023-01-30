@@ -1,29 +1,46 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
+import { setData } from '../helpers/localStorage';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
   const [products, setProducts] = useState([]);
+  const [totalPrices, setTotalPrices] = useState([]);
+  const [shoppingCartTotal, setShoppingCartTotal] = useState(0);
 
-  useEffect(() => {
+  const history = useHistory();
+
+  useEffect(() => { // gerencia estado incicial
     async function fetchData() {
       const data = await getCostumerProducts();
       setProducts(data);
-      setQuantities(data.map(() => 0)); // este 0 corresponde ao estado inicial da quantidade que será exibida no app
-      // a função acima atribui a cada produto um estado local de quantities igual a 0
+      setQuantities(data.map(() => 0));
+      setTotalPrices(data.map((product) => product.price * 0));
     }
 
     fetchData();
   }, []);
 
+  // altera preços de acordo com a quantidade (gerenciado pelo estado local de quantities)
+  useEffect(() => {
+    const newTotalPrices = products.map(
+      (product, index) => product.price * quantities[index],
+    );
+    setTotalPrices(newTotalPrices);
+  }, [quantities, products]);
+
+  // soma o valor total do carrinho e controla no estado local
+  useEffect(() => {
+    setShoppingCartTotal(totalPrices.reduce((sum, price) => sum + price, 0));
+  }, [totalPrices]);
+
   return (
     <div>
-      {products?.map((product, index) => (
-        <div
-          key={ product.id }
-        >
+      {totalPrices.length > 0 && products?.map((product, index) => (
+        <div key={ product.id }>
           <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-            {product.price.replace(/\./, ',')}
+            {totalPrices[index].toFixed(2).replace(/\./, ',')}
           </p>
 
           <img
@@ -35,10 +52,6 @@ function ProductCard() {
           <h2 data-testid={ `customer_products__element-card-title-${product.id}` }>
             { product.name }
           </h2>
-
-          {/* botões */}
-
-          {/* remove itens */}
 
           <button
             type="button"
@@ -54,7 +67,6 @@ function ProductCard() {
             -
 
           </button>
-          {/* desabilita quando chega a 0 */}
 
           <input
             data-testid={ `customer_products__input-card-quantity-${product.id}` }
@@ -62,12 +74,12 @@ function ProductCard() {
             value={ quantities[index] }
             onChange={ (e) => {
               const newQuantities = [...quantities];
+              // o Number() é necessário pq o input chega como string e dá problema na soma
               newQuantities[index] = Number(e.target.value);
               setQuantities(newQuantities);
             } }
           />
 
-          {/* adds itens */}
           <button
             type="button"
             data-testid={ `customer_products__button-card-add-item-${product.id}` }
@@ -81,10 +93,27 @@ function ProductCard() {
           </button>
         </div>
 
-        // </div>
       ))}
+      <div data-testid="customer_products__button-cart">
+        Ver Carrinho: R$
+        <button
+          type="button"
+          data-testid="customer_products__checkout-bottom-value"
+          onClick={ () => {
+            // localStorage.setItem('teste key', 'teste value');
+            setData('shoppingCart', shoppingCartTotal.toFixed(2).replace(/\./, ','));
+            history.push('/customer/checkout');
+          } }
+          disabled={ !shoppingCartTotal !== 0 }
+        >
+
+          {shoppingCartTotal.toFixed(2).replace(/\./, ',')}
+        </button>
+      </div>
     </div>
   );
 }
 
 export default ProductCard;
+
+// https://www.slingacademy.com/article/javascript-ways-to-calculate-the-sum-of-an-array/
