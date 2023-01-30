@@ -11,6 +11,7 @@ export default function AdminManage() {
   const [role, setRole] = useState('Vendedor');
   const [response, setResponse] = useState('');
   const [reset, setReset] = useState(false);
+  const [message, setMessage] = useState('');
 
   const user = getDataFromLocalStorage('user');
 
@@ -40,7 +41,11 @@ export default function AdminManage() {
     if (role === 'Administrador') setRole('administrator');
     const data = { newRegister: { name, email, password, role } };
     const responseRegister = await postRegisterAdmin(data, user.token);
-    if (!responseRegister) setResponse('ERRO!');
+    console.log(responseRegister);
+    if (!responseRegister) {
+      setResponse('ERRO!');
+      setMessage('Verifique as credencioais ou os dados');
+    }
     if (responseRegister) setResponse('Usuário criado com sucesso!');
     setReset(!reset);
   };
@@ -106,6 +111,10 @@ export default function AdminManage() {
         </button>
       </form>
       <span>{response}</span>
+      {
+        message.length > 0
+        && <span data-testid="admin_manage__element-invalid-register">{ message}</span>
+      }
     </div>
   );
 }
