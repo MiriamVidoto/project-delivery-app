@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
 import { setData } from '../helpers/localStorage';
 
@@ -7,6 +8,8 @@ function ProductCard() {
   const [products, setProducts] = useState([]);
   const [totalPrices, setTotalPrices] = useState([]);
   const [shoppingCartTotal, setShoppingCartTotal] = useState(0);
+
+  const history = useHistory();
 
   useEffect(() => { // gerencia estado incicial
     async function fetchData() {
@@ -91,19 +94,21 @@ function ProductCard() {
         </div>
 
       ))}
-      <div data-testid="customer_products__button-cart">
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        onClick={ () => {
+          setData('shoppingCart', shoppingCartTotal.toFixed(2).replace(/\./, ','));
+          history.push('/customer/checkout');
+        } }
+        disabled={ shoppingCartTotal === 0 }
+      >
         Ver Carrinho: R$
-        <button
-          type="button"
-          data-testid="customer_products__checkout-bottom-value"
-          onClick={ () => {
-            setData('shoppingCart', shoppingCartTotal.toFixed(2).replace(/\./, ','));
-          } }
-        >
+        <div data-testid="customer_products__checkout-bottom-value">
 
           {shoppingCartTotal.toFixed(2).replace(/\./, ',')}
-        </button>
-      </div>
+        </div>
+      </button>
     </div>
   );
 }
