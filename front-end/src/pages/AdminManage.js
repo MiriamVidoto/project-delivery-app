@@ -35,6 +35,9 @@ export default function AdminManage() {
   };
 
   const createRegisterByAdmin = async () => {
+    if (role === 'Vendedor') setRole('seller');
+    if (role === 'Cliente') setRole('customer');
+    if (role === 'Administrador') setRole('administrator');
     const data = { newRegister: { name, email, password, role }, tokenAdmin: user.token };
     const responseRegister = await postRegisterAdmin(data);
     if (!responseRegister) setResponse('ERRO!');

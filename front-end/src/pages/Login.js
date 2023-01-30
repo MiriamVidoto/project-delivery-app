@@ -32,10 +32,9 @@ export default function Login() {
     const sucess = 200;
     const newPostLogin = await postLogin(newPost);
 
-    if (newPostLogin.status !== sucess) setInvalid(true);
-    if (newPostLogin.status === sucess) {
-      const { name, email, role, token } = newPostLogin.data;
-      setDataToLocalStorage('user', { name, email, role, token });
+    if (newPostLogin === undefined) setInvalid(true);
+    else if (newPostLogin.status === sucess) {
+      setDataToLocalStorage('user', newPostLogin.data);
       redirect(newPostLogin.data.role);
     }
     return newPostLogin;
