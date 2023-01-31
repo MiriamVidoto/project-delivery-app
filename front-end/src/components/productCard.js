@@ -37,6 +37,27 @@ function ProductCard() {
     setShoppingCartTotal(totalPrices.reduce((sum, price) => sum + price, 0));
   }, [totalPrices]);
 
+  const handleClickShoppingCart = () => {
+    setData(
+      'shoppingCartTotal',
+      shoppingCartTotal.toFixed(2).replace(/\./, ','),
+    );
+    history.push('/customer/checkout');
+  };
+
+  const handleClickProducts = (product, newQuantities, index) => {
+    setData(
+      'productsCart',
+      { productId: product.id,
+        name: product.name,
+        quantity: newQuantities[index],
+        unitPrice: product.price,
+        subTotal: (product.price * quantities[index])
+          .toFixed(2)
+          .replace(/\./, ',') },
+    );
+  };
+
   return (
     <div>
       {totalPrices.length > 0
@@ -82,6 +103,7 @@ function ProductCard() {
                 newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
                 /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
                 setQuantities(newQuantities);
+                handleClickProducts(product, newQuantities, index);
               } }
               disabled={ quantities[index] === 0 }
             >
@@ -90,7 +112,6 @@ function ProductCard() {
 
             <input
               data-testid={ `customer_products__input-card-quantity-${product.id}` }
-              type="number"
               value={ quantities[index] }
               onChange={ (e) => {
                 const newQuantities = [...quantities];
@@ -107,6 +128,7 @@ function ProductCard() {
                 const newQuantities = [...quantities];
                 newQuantities[index] += 1;
                 setQuantities(newQuantities);
+                handleClickProducts(product, newQuantities, index);
               } }
             >
               +
@@ -117,11 +139,7 @@ function ProductCard() {
         type="button"
         data-testid="customer_products__button-cart"
         onClick={ () => {
-          setData(
-            'shoppingCart',
-            shoppingCartTotal.toFixed(2).replace(/\./, ','),
-          );
-          history.push('/customer/checkout');
+          handleClickShoppingCart();
         } }
         disabled={ shoppingCartTotal === 0 }
       >
