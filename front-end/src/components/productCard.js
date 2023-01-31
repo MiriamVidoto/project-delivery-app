@@ -11,7 +11,8 @@ function ProductCard() {
 
   const history = useHistory();
 
-  useEffect(() => { // gerencia estado incicial
+  useEffect(() => {
+    // gerencia estado inicial
     async function fetchData() {
       const data = await getCostumerProducts();
       setProducts(data);
@@ -37,75 +38,83 @@ function ProductCard() {
 
   return (
     <div>
-      {totalPrices.length > 0 && products?.map((product, index) => (
-        <div key={ product.id }>
-          <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-            {totalPrices[index].toFixed(2).replace(/\./, ',')}
-          </p>
+      {totalPrices.length > 0
+        && products?.map((product, index) => (
+          <div key={ product.id }>
+            <p
+              data-testid={ `customer_products__element-card-price-${product.id}` }
+            >
+              {quantities[index] === 0
+                ? product.price.replace(/\./, ',')
+                : (product.price * quantities[index])
+                  .toFixed(2)
+                  .replace(/\./, ',')}
+            </p>
+            <img
+              src={ product.urlImage }
+              alt={ product.name }
+              data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+            />
 
-          <img
-            src={ product.urlImage }
-            alt={ product.name }
-            data-testid={ `customer_products__img-card-bg-image-${product.id}` }
-          />
+            <h2
+              data-testid={ `customer_products__element-card-title-${product.id}` }
+            >
+              {product.name}
+            </h2>
 
-          <h2 data-testid={ `customer_products__element-card-title-${product.id}` }>
-            { product.name }
-          </h2>
+            <button
+              type="button"
+              data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+              onClick={ () => {
+                const newQuantities = [...quantities];
+                newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
+                /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
+                setQuantities(newQuantities);
+              } }
+              disabled={ quantities[index] === 0 }
+            >
+              -
+            </button>
 
-          <button
-            type="button"
-            data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-            onClick={ () => {
-              const newQuantities = [...quantities];
-              newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
-              /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
-              setQuantities(newQuantities);
-            } }
-            disabled={ quantities[index] === 0 }
-          >
-            -
+            <input
+              data-testid={ `customer_products__input-card-quantity-${product.id}` }
+              type="number"
+              value={ quantities[index] }
+              onChange={ (e) => {
+                const newQuantities = [...quantities];
+                // o Number() é necessário pq o input chega como string e dá problema na soma
+                newQuantities[index] = Number(e.target.value);
+                setQuantities(newQuantities);
+              } }
+            />
 
-          </button>
-
-          <input
-            data-testid={ `customer_products__input-card-quantity-${product.id}` }
-            type="number"
-            value={ quantities[index] }
-            onChange={ (e) => {
-              const newQuantities = [...quantities];
-              // o Number() é necessário pq o input chega como string e dá problema na soma
-              newQuantities[index] = Number(e.target.value);
-              setQuantities(newQuantities);
-            } }
-          />
-
-          <button
-            type="button"
-            data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            onClick={ () => {
-              const newQuantities = [...quantities];
-              newQuantities[index] += 1;
-              setQuantities(newQuantities);
-            } }
-          >
-            +
-          </button>
-        </div>
-
-      ))}
+            <button
+              type="button"
+              data-testid={ `customer_products__button-card-add-item-${product.id}` }
+              onClick={ () => {
+                const newQuantities = [...quantities];
+                newQuantities[index] += 1;
+                setQuantities(newQuantities);
+              } }
+            >
+              +
+            </button>
+          </div>
+        ))}
       <button
         type="button"
         data-testid="customer_products__button-cart"
         onClick={ () => {
-          setData('shoppingCart', shoppingCartTotal.toFixed(2).replace(/\./, ','));
+          setData(
+            'shoppingCart',
+            shoppingCartTotal.toFixed(2).replace(/\./, ','),
+          );
           history.push('/customer/checkout');
         } }
         disabled={ shoppingCartTotal === 0 }
       >
         Ver Carrinho: R$
         <div data-testid="customer_products__checkout-bottom-value">
-
           {shoppingCartTotal.toFixed(2).replace(/\./, ',')}
         </div>
       </button>
