@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
-import { setData } from '../helpers/localStorage';
+import { setData, getData } from '../helpers/localStorage';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
@@ -45,16 +45,21 @@ function ProductCard() {
   };
 
   const handleClickProducts = (product, newQuantities, index) => {
-    setData(
-      'productsCart',
-      { productId: product.id,
-        name: product.name,
-        quantity: newQuantities[index],
-        unitPrice: product.price,
-        subTotal: (product.price * quantities[index])
-          .toFixed(2)
-          .replace(/\./, ',') },
-    );
+    const oldCart = getData('productsCart');
+    const newProduct = {
+      productId: product.id,
+      name: product.name,
+      quantity: newQuantities[index],
+      unitPrice: product.price,
+      subTotal: (product.price * quantities[index])
+        .toFixed(2)
+        .replace(/\./, ','),
+    };
+    if (!oldCart || oldCart === null) {
+      setData('productsCart', [newProduct]);
+    } else {
+      setData('productsCart', oldCart.concat(newProduct));
+    }
   };
 
   return (
