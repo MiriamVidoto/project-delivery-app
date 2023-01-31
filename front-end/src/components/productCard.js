@@ -74,16 +74,13 @@ function ProductCard() {
       {totalPrices.length > 0
         && products?.map((product, index) => (
           <div key={ product.id }>
-            <p>
-
+            <p data-testid={ `customer_products__element-card-price-${product.id}` }>
               Preço:
               {' '}
               {product.price}
               {' '}
             </p>
-            <p
-              data-testid={ `customer_products__element-card-price-${product.id}` }
-            >
+            <p>
               {' '}
               Sub-total:
               {' '}
