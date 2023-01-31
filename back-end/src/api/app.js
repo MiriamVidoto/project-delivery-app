@@ -4,8 +4,7 @@ const controllerLogin = require('./controller/login');
 const controllerRegister = require('./controller/register');
 const controllerAdminRegister = require('./controller/adminRegister');
 const controllerCostumerProducts = require('./controller/costumerProducts');
-const controllerSellerOrders = require('./controller/sellerOrders');
-const controllerCheckoutSale = require('./controller/checkoutSale');
+const controllerSales = require('./controller/sales');
 
 const app = express();
 
@@ -17,7 +16,8 @@ app.post('/login', controllerLogin.login);
 app.post('/register', controllerRegister.register);
 app.post('/admin/register', controllerAdminRegister.adminRegister);
 app.get('/customer/products', controllerCostumerProducts.costumerProducts);
-app.get('/seller/orders', controllerSellerOrders.sellerOrders);
-app.post('/checkout/sale', controllerCheckoutSale.checkoutSale);
+app.get('/sales/seller', controllerSales.ordersSeller);
+app.get('/sales/customer', controllerSales.ordersCustomer);
+app.post('/sales', controllerSales.checkoutSale);
 
 module.exports = app;
