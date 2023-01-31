@@ -58,7 +58,12 @@ function ProductCard() {
     if (!oldCart || oldCart === null) {
       setData('productsCart', [newProduct]);
     } else {
-      setData('productsCart', oldCart.concat(newProduct));
+      const existProduct = oldCart.findIndex((e) => e.productId === newProduct.productId);
+      if (existProduct >= 0) {
+        oldCart.splice(existProduct, 1);
+      }
+      oldCart.push(newProduct);
+      setData('productsCart', oldCart);
     }
   };
 
@@ -81,7 +86,7 @@ function ProductCard() {
               Sub-total:
               {' '}
               {quantities[index] === 0
-                ? product.price.replace(/\./, ',')
+                ? '0,00'
                 : (product.price * quantities[index])
                   .toFixed(2)
                   .replace(/\./, ',')}
