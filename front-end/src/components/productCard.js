@@ -67,7 +67,7 @@ function ProductCard() {
 
               Preço:
               {' '}
-              {product.price}
+              {product.price.toFixed(2).replace(/\./, ',')}
               {' '}
             </p>
             <p
