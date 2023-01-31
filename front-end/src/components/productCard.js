@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
 import { setData } from '../helpers/localStorage';
+import '../style/productCard.css';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
@@ -44,6 +45,18 @@ function ProductCard() {
             <p
               data-testid={ `customer_products__element-card-price-${product.id}` }
             >
+
+              Preço:
+              {' '}
+              {product.price}
+              {' '}
+            </p>
+            <p
+              data-testid={ `customer_products__element-card-price-${product.id}` }
+            >
+              {' '}
+              Sub-total:
+              {' '}
               {quantities[index] === 0
                 ? product.price.replace(/\./, ',')
                 : (product.price * quantities[index])
@@ -51,6 +64,7 @@ function ProductCard() {
                   .replace(/\./, ',')}
             </p>
             <img
+              className="image"
               src={ product.urlImage }
               alt={ product.name }
               data-testid={ `customer_products__img-card-bg-image-${product.id}` }
