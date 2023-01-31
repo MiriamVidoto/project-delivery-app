@@ -45,7 +45,7 @@ function ProductCard() {
   };
 
   const handleClickProducts = (product, newQuantities, index) => {
-    const oldCart = getData("productsCart");
+    const oldCart = getData('productsCart');
     const newProduct = {
       productId: product.id,
       name: product.name,
@@ -53,12 +53,12 @@ function ProductCard() {
       unitPrice: product.price,
       subTotal: (product.price * quantities[index])
         .toFixed(2)
-        .replace(/\./, ","),
+        .replace(/\./, ','),
     };
     if (!oldCart || oldCart === null) {
-      setData("productsCart", [newProduct]);
+      setData('productsCart', [newProduct]);
     } else {
-      setData("productsCart", oldCart.concat(newProduct));
+      setData('productsCart', oldCart.concat(newProduct));
     }
   };
 
