@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
 import { setData } from '../helpers/localStorage';
-import '../style/productCard.css';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
@@ -67,7 +66,7 @@ function ProductCard() {
 
               Preço:
               {' '}
-              {product.price.toFixed(2).replace(/\./, ',')}
+              {product.price}
               {' '}
             </p>
             <p
