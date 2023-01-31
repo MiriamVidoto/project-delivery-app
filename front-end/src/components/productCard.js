@@ -51,7 +51,7 @@ function ProductCard() {
       name: product.name,
       quantity: newQuantities[index],
       unitPrice: product.price,
-      subTotal: (product.price * quantities[index])
+      subTotal: (product.price * newQuantities[index])
         .toFixed(2)
         .replace(/\./, ','),
     };
