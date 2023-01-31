@@ -1,90 +1,157 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
+import { setData } from '../helpers/localStorage';
+import '../style/productCard.css';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
   const [products, setProducts] = useState([]);
+  const [totalPrices, setTotalPrices] = useState([]);
+  const [shoppingCartTotal, setShoppingCartTotal] = useState(0);
+
+  const history = useHistory();
 
   useEffect(() => {
+    // gerencia estado inicial
     async function fetchData() {
       const data = await getCostumerProducts();
       setProducts(data);
-      setQuantities(data.map(() => 0)); // este 0 corresponde ao estado inicial da quantidade que será exibida no app
-      // a função acima atribui a cada produto um estado local de quantities igual a 0
+      setQuantities(data.map(() => 0));
+      setTotalPrices(data.map((product) => product.price * 0));
     }
 
     fetchData();
   }, []);
 
+  // altera preços de acordo com a quantidade (gerenciado pelo estado local de quantities)
+  useEffect(() => {
+    const newTotalPrices = products.map(
+      (product, index) => product.price * quantities[index],
+    );
+    setTotalPrices(newTotalPrices);
+  }, [quantities, products]);
+
+  // soma o valor total do carrinho e controla no estado local
+  useEffect(() => {
+    setShoppingCartTotal(totalPrices.reduce((sum, price) => sum + price, 0));
+  }, [totalPrices]);
+
+  const handleClickShoppingCart = () => {
+    setData(
+      'shoppingCartTotal',
+      shoppingCartTotal.toFixed(2).replace(/\./, ','),
+    );
+    history.push('/customer/checkout');
+  };
+
+  const handleClickProducts = (product, newQuantities, index) => {
+    setData(
+      'productsCart',
+      { productId: product.id,
+        name: product.name,
+        quantity: newQuantities[index],
+        unitPrice: product.price,
+        subTotal: (product.price * quantities[index])
+          .toFixed(2)
+          .replace(/\./, ',') },
+    );
+  };
+
   return (
     <div>
-      {products?.map((product, index) => (
-        <div
-          key={ product.id }
-        >
-          <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-            {product.price.replace(/\./, ',')}
-          </p>
+      {totalPrices.length > 0
+        && products?.map((product, index) => (
+          <div key={ product.id }>
+            <p>
 
-          <img
-            src={ product.urlImage }
-            alt={ product.name }
-            data-testid={ `customer_products__img-card-bg-image-${product.id}` }
-          />
+              Preço:
+              {' '}
+              {product.price.toFixed(2).replace(/\./, ',')}
+              {' '}
+            </p>
+            <p
+              data-testid={ `customer_products__element-card-price-${product.id}` }
+            >
+              {' '}
+              Sub-total:
+              {' '}
+              {quantities[index] === 0
+                ? product.price.replace(/\./, ',')
+                : (product.price * quantities[index])
+                  .toFixed(2)
+                  .replace(/\./, ',')}
+            </p>
+            <img
+              className="image"
+              src={ product.urlImage }
+              alt={ product.name }
+              data-testid={ `customer_products__img-card-bg-image-${product.id}` }
+            />
 
-          <h2 data-testid={ `customer_products__element-card-title-${product.id}` }>
-            { product.name }
-          </h2>
+            <h2
+              data-testid={ `customer_products__element-card-title-${product.id}` }
+            >
+              {product.name}
+            </h2>
 
-          {/* botões */}
+            <button
+              type="button"
+              data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+              onClick={ () => {
+                const newQuantities = [...quantities];
+                newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
+                /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
+                setQuantities(newQuantities);
+                handleClickProducts(product, newQuantities, index);
+              } }
+              disabled={ quantities[index] === 0 }
+            >
+              -
+            </button>
 
-          {/* remove itens */}
+            <input
+              data-testid={ `customer_products__input-card-quantity-${product.id}` }
+              value={ quantities[index] }
+              onChange={ (e) => {
+                const newQuantities = [...quantities];
+                // o Number() é necessário pq o input chega como string e dá problema na soma
+                newQuantities[index] = Number(e.target.value);
+                setQuantities(newQuantities);
+              } }
+            />
 
-          <button
-            type="button"
-            data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-            onClick={ () => {
-              const newQuantities = [...quantities];
-              newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
-              /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
-              setQuantities(newQuantities);
-            } }
-            disabled={ quantities[index] === 0 }
-          >
-            -
-
-          </button>
-          {/* desabilita quando chega a 0 */}
-
-          <input
-            data-testid={ `customer_products__input-card-quantity-${product.id}` }
-            type="number"
-            value={ quantities[index] }
-            onChange={ (e) => {
-              const newQuantities = [...quantities];
-              newQuantities[index] = Number(e.target.value);
-              setQuantities(newQuantities);
-            } }
-          />
-
-          {/* adds itens */}
-          <button
-            type="button"
-            data-testid={ `customer_products__button-card-add-item-${product.id}` }
-            onClick={ () => {
-              const newQuantities = [...quantities];
-              newQuantities[index] += 1;
-              setQuantities(newQuantities);
-            } }
-          >
-            +
-          </button>
+            <button
+              type="button"
+              data-testid={ `customer_products__button-card-add-item-${product.id}` }
+              onClick={ () => {
+                const newQuantities = [...quantities];
+                newQuantities[index] += 1;
+                setQuantities(newQuantities);
+                handleClickProducts(product, newQuantities, index);
+              } }
+            >
+              +
+            </button>
+          </div>
+        ))}
+      <button
+        type="button"
+        data-testid="customer_products__button-cart"
+        onClick={ () => {
+          handleClickShoppingCart();
+        } }
+        disabled={ shoppingCartTotal === 0 }
+      >
+        Ver Carrinho: R$
+        <div data-testid="customer_products__checkout-bottom-value">
+          {shoppingCartTotal.toFixed(2).replace(/\./, ',')}
         </div>
-
-        // </div>
-      ))}
+      </button>
     </div>
   );
 }
 
 export default ProductCard;
+
+// https://www.slingacademy.com/article/javascript-ways-to-calculate-the-sum-of-an-array/

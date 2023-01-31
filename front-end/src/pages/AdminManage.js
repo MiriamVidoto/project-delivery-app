@@ -1,12 +1,30 @@
 import { validate } from 'email-validator';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBar from '../components/navbar';
+import { getDataFromLocalStorage } from '../utils/localStorage';
+import postRegisterAdmin from '../api/adminRegister';
 
 export default function AdminManage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('Vendedor');
+  const [response, setResponse] = useState('');
+  const [reset, setReset] = useState(false);
+  const [message, setMessage] = useState('');
+
+  const user = getDataFromLocalStorage('user');
+
+  const resetForm = () => {
+    setName('');
+    setEmail('');
+    setPassword('');
+    setRole('Vendedor');
+  };
+
+  useEffect(() => {
+    resetForm();
+  }, [reset]);
 
   const register = () => {
     const minLengthName = 12;
@@ -17,9 +35,24 @@ export default function AdminManage() {
       && role.length !== '');
   };
 
+  const createRegisterByAdmin = async () => {
+    if (role === 'Vendedor') setRole('seller');
+    if (role === 'Cliente') setRole('customer');
+    if (role === 'Administrador') setRole('administrator');
+    const data = { newRegister: { name, email, password, role } };
+    const responseRegister = await postRegisterAdmin(data, user.token);
+    console.log(responseRegister);
+    if (!responseRegister) {
+      setResponse('ERRO!');
+      setMessage('Verifique as credencioais ou os dados');
+    }
+    if (responseRegister) setResponse('Usuário criado com sucesso!');
+    setReset(!reset);
+  };
+
   return (
     <div>
-      <NavBar path="admin" />
+      <NavBar path="admin" name={ user.name } />
       <h1>Cadastrar novo usuário</h1>
       <form>
         <label htmlFor="name">
@@ -29,6 +62,7 @@ export default function AdminManage() {
             type="text"
             placeholder="Nome e sobrenome"
             name="name"
+            value={ name }
             onChange={ (e) => setName(e.target.value) }
           />
         </label>
@@ -39,6 +73,7 @@ export default function AdminManage() {
             type="text"
             placeholder="seu-email@site.com.br"
             name="email"
+            value={ email }
             onChange={ (e) => setEmail(e.target.value) }
           />
         </label>
@@ -49,6 +84,7 @@ export default function AdminManage() {
             type="password"
             placeholder="**********"
             name="password"
+            value={ password }
             onChange={ (e) => setPassword(e.target.value) }
           />
         </label>
@@ -57,6 +93,7 @@ export default function AdminManage() {
           <select
             name="tipo"
             data-testid="admin_manage__select-role"
+            value={ role }
             onChange={ (e) => setRole(e.target.value) }
           >
             <option value="seller">Vendedor</option>
@@ -65,13 +102,19 @@ export default function AdminManage() {
           </select>
         </label>
         <button
-          type="submit"
+          type="button"
           data-testid="admin_manage__button-register"
           disabled={ !register() }
+          onClick={ () => createRegisterByAdmin() }
         >
           Cadastrar
         </button>
       </form>
+      <span>{response}</span>
+      {
+        message.length > 0
+        && <span data-testid="admin_manage__element-invalid-register">{ message}</span>
+      }
     </div>
   );
 }

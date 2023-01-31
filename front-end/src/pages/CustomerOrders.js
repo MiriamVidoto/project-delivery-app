@@ -2,22 +2,22 @@ import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
-export default function SellerOrders() {
+export default function CustomerOrders() {
   const sales = [
     {
-      id: 1,
-      user_id: 1,
-      seller_id: 1,
-      totalPrice: 253.95,
+      id: 2,
+      user_id: 3,
+      seller_id: 5,
+      totalPrice: 10.95,
       deliveryAddress: 'endereço',
-      deliveryNumber: 25,
+      deliveryNumber: 23,
       saleDate: 'data',
       status: 'pendente',
     },
   ];
 
   const LIMIT = 10;
-  const path = 'seller';
+  const path = 'customer';
   const user = getDataFromLocalStorage('user');
 
   return (

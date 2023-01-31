@@ -1,21 +1,21 @@
 import React, { useEffect } from 'react';
 import NavBar from '../components/navbar';
 import ProductCard from '../components/productCard';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 function Products() {
+  const user = getDataFromLocalStorage('user');
+
   useEffect(() => {
   }, []);
 
   return (
     <div>
-
+      <NavBar path="customer" name={ user.name } />
       <div>
         <h1>Products Page</h1>
       </div>
       <ProductCard />
-
-      <NavBar path="customer" />
-      Products
     </div>
   );
 }
