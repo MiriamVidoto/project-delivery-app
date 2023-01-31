@@ -62,7 +62,9 @@ function ProductCard() {
       if (existProduct >= 0) {
         oldCart.splice(existProduct, 1);
       }
-      oldCart.push(newProduct);
+      if (newProduct.quantity !== 0) {
+        oldCart.push(newProduct);
+      }
       setData('productsCart', oldCart);
     }
   };
