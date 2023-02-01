@@ -51,14 +51,21 @@ function ProductCard() {
       name: product.name,
       quantity: newQuantities[index],
       unitPrice: product.price,
-      subTotal: (product.price * quantities[index])
+      subTotal: (product.price * newQuantities[index])
         .toFixed(2)
         .replace(/\./, ','),
     };
     if (!oldCart || oldCart === null) {
       setData('productsCart', [newProduct]);
     } else {
-      setData('productsCart', oldCart.concat(newProduct));
+      const existProduct = oldCart.findIndex((e) => e.productId === newProduct.productId);
+      if (existProduct >= 0) {
+        oldCart.splice(existProduct, 1);
+      }
+      if (newProduct.quantity !== 0) {
+        oldCart.splice(existProduct, 0, newProduct);
+      }
+      setData('productsCart', oldCart);
     }
   };
 
@@ -67,21 +74,18 @@ function ProductCard() {
       {totalPrices.length > 0
         && products?.map((product, index) => (
           <div key={ product.id }>
-            <p>
-
+            <p data-testid={ `customer_products__element-card-price-${product.id}` }>
               Preço:
               {' '}
-              {product.price}
+              {(product.price).replace(/\./, ',')}
               {' '}
             </p>
-            <p
-              data-testid={ `customer_products__element-card-price-${product.id}` }
-            >
+            <p>
               {' '}
               Sub-total:
               {' '}
               {quantities[index] === 0
-                ? product.price.replace(/\./, ',')
+                ? '0,00'
                 : (product.price * quantities[index])
                   .toFixed(2)
                   .replace(/\./, ',')}
