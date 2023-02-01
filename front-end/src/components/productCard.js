@@ -77,7 +77,7 @@ function ProductCard() {
             <p data-testid={ `customer_products__element-card-price-${product.id}` }>
               Preço:
               {' '}
-              {product.price}
+              {(product.price).replace(/\./, ',')}
               {' '}
             </p>
             <p>
