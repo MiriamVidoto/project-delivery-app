@@ -44,7 +44,7 @@ export default function CheckoutCustomer() {
   const handleClick = async () => {
     setDatasLocalStorage();
     const sale = newSale();
-    const post = await postSales(sale);
+    const post = await postSales(sale, user.token);
     const { id } = post;
     if (post) history.push(`/customer/orders/${id}`);
   };

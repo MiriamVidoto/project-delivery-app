@@ -1,3 +1,4 @@
+import React from 'react';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
@@ -24,11 +25,12 @@ export default function CustomerOrderDetails() {
 
   return (
     <div>
+      <h1>details</h1>
       <NavBar path={ path } name={ user.name } />
       <div>
         <h1>Detalhe do pedido</h1>
         <div>
-          <span data-testid={ `${prefix}element-order-details-label-order-${id}` }>
+          <span data-testid={ `${prefix}element-order-details-label-order-${order.id}` }>
             {` Pedido ${order.id}`}
           </span>
           <span data-testid={ `${prefix}element-order-details-label-order-date` }>
