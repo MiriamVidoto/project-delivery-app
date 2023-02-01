@@ -26,8 +26,8 @@ class CheckoutCustomer extends React.Component {
     if (cartItems) {
       const total = cartItems.map((item) => item.unitPrice * item.quantity)
         .reduce((curr, acc) => acc + curr, 0)
-        .toFixed(2);
-      console.log(total);
+        .toFixed(2)
+        .replace(/\./, ',');
       this.setState({
         totalPrice: total,
       });
@@ -130,7 +130,7 @@ class CheckoutCustomer extends React.Component {
                         `customer_checkout__element-order-table-unit-price-${index}`
                       }
                     >
-                      {product.unitPrice}
+                      {product.unitPrice.replace(/\./, ',')}
 
                     </td>
                     <td
@@ -158,13 +158,13 @@ class CheckoutCustomer extends React.Component {
                 ))
               }
             </tbody>
-            <h1
+            <h3
               data-testid="customer_checkout__element-order-total-price"
             >
               {
-                `Total: R$ ${totalPrice}`
+                `${totalPrice}`
               }
-            </h1>
+            </h3>
 
           </table>
 
