@@ -1,166 +1,185 @@
-import React, { useState } from 'react';
+import React from 'react';
 import NavBar from '../components/navbar';
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../utils/localStorage';
 
-function CheckoutCustomer() {
-  const productsListMock = [
-    {
-      id: 1,
-      productId: 1,
-      name: 'Cerveja Stella 250ml',
-      quantity: 3,
-      unitPrice: 3.50,
-      subTotal: 10.50,
-    },
-    {
-      id: 2,
-      productId: 2,
-      name: 'Cerveja Skol Latão 450ml',
-      quantity: 4,
-      unitPrice: 4.10,
-      subTotal: 16.40,
-    },
-    {
-      id: 3,
-      productId: 3,
-      name: 'Salgadinho Torcida Churrasco',
-      quantity: 1,
-      unitPrice: 1.56,
-      subTotal: 1.56,
-    },
-  ];
-  const [productsMock] = useState(productsListMock);
+class CheckoutCustomer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      cartItems: [],
+      totalPrice: 0.00,
+    };
+  }
 
-  const itemsCart = getDataFromLocalStorage('cartItems');
-  
-  // const [cartItems, setCartItems] = useState(itemsCart);
+  componentDidMount() {
+    const cartItems = getDataFromLocalStorage('productsCart');
+    if (cartItems) {
+      this.setState({
+        cartItems,
+      }, () => this.totalPriceCartItems());
+    }
+  }
 
-  const removeFromCart = ({ target }) => {
-    const { id } = target;
-    const cartItems = getDataFromLocalStorage('cartItems');
-    const newCartItems = cartItems.filter(({ id: filterId }) => filterId !== id);
-
-    setDataToLocalStorage('cartItems', newCartItems);
-    // setCartItems(newCartItems);
+  totalPriceCartItems = () => {
+    const cartItems = getDataFromLocalStorage('productsCart');
+    console.log(cartItems);
+    if (cartItems) {
+      const total = cartItems.map((item) => item.unitPrice * item.quantity)
+        .reduce((curr, acc) => acc + curr, 0)
+        .toFixed(2);
+      console.log(total);
+      this.setState({
+        totalPrice: total,
+      });
+    }
   };
 
-  return (
-    <div>
-      <NavBar />
-      <h1>Checkout Customer</h1>
+  removeFromCart = ({ target }) => {
+    const { id } = target;
+    const cartItemsOld = getDataFromLocalStorage('productsCart');
+    const newCartItems = cartItemsOld.filter(
+      (item) => item.productId !== Number(id),
+    );
+    this.setState({
+      cartItems: newCartItems,
+    });
+    setDataToLocalStorage('productsCart', newCartItems);
+    this.totalPriceCartItems();
+  };
 
+  render() {
+    const { cartItems, totalPrice } = this.state;
+    return (
       <div>
-        <h3> Detalhes e Endereço para Entrega</h3>
+        <NavBar />
+        <h1>Checkout Customer</h1>
 
-        <label htmlFor="select">
-          P. Vendedora Responsável:
-          <select
-            id="select"
-            data-testid="customer_checkout__select-seller"
-          >
-            <option value="nomes dos vendedores">Nomes dos vendedores</option>
-          </select>
-        </label>
+        <div>
+          <h3> Detalhes e Endereço para Entrega</h3>
 
-        <label htmlFor="inputText">
-          Endereço
-          <input
-            type="text"
-            id="inputText"
-            data-testid="customer_checkout__input-address"
-          />
-        </label>
+          <label htmlFor="select">
+            P. Vendedora Responsável:
+            <select
+              id="select"
+              data-testid="customer_checkout__select-seller"
+            >
+              <option value="nomes dos vendedores">Nomes dos vendedores</option>
+            </select>
+          </label>
 
-        <label htmlFor="inputText">
-          Número
-          <input
-            type="text"
-            id="inputText"
-            data-testid="customer_checkout__input-address-number"
-          />
-        </label>
+          <label htmlFor="inputText">
+            Endereço
+            <input
+              type="text"
+              id="inputText"
+              data-testid="customer_checkout__input-address"
+            />
+          </label>
 
-        <h4>Finalizar Pedido</h4>
+          <label htmlFor="inputText">
+            Número
+            <input
+              type="text"
+              id="inputText"
+              data-testid="customer_checkout__input-address-number"
+            />
+          </label>
 
-        <table id="table">
-          <thead>
-            <th>Item</th>
-            <th>Descrição</th>
-            <th>Quantidade</th>
-            <th>Valor Unitário</th>
-            <th>Sub-total</th>
-            <th>Remover item</th>
-          </thead>
+          <h4>Finalizar Pedido</h4>
 
-          <tbody>
-            {
-              productsMock.map((product, index) => (
+          <table id="table">
+            <thead>
+              <th>Item</th>
+              <th>Descrição</th>
+              <th>Quantidade</th>
+              <th>Valor Unitário</th>
+              <th>Sub-total</th>
+              <th>Remover item</th>
+            </thead>
 
-                <tr key={ product.name }>
-                  <td
-                    data-testid={ `
-                    customer_checkout__element-order-table-item-number-${index}` }
-                  >
-                    {product.productId}
-                  </td>
-                  <td
-                    data-testid={ `
-                    customer_checkout__element-order-table-name-${index}` }
-                  >
-                    {product.name}
+            <tbody>
+              {
+                cartItems.map((product, index) => (
 
-                  </td>
-                  <td
-                    data-testid={ `
-                    customer_checkout__element-order-table-quantity-${index}` }
-                  >
-                    {product.quantity}
+                  <tr key={ product.name }>
+                    <td
+                      data-testid={
+                        `customer_checkout__element-order-table-item-number-${index}`
+                      }
+                    >
+                      {index + 1 }
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_checkout__element-order-table-name-${index}`
+                      }
+                    >
+                      {product.name}
 
-                  </td>
-                  <td
-                    data-testid={ `
-                    customer_checkout__element-order-table-unit-price-${index}` }
-                  >
-                    {product.unitPrice}
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_checkout__element-order-table-quantity-${index}`
+                      }
+                    >
+                      {product.quantity}
 
-                  </td>
-                  <td
-                    data-testid={ `
-                    customer_checkout__element-order-table-sub-total-${index}` }
-                  >
-                    {product.subTotal}
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_checkout__element-order-table-unit-price-${index}`
+                      }
+                    >
+                      {product.unitPrice}
 
-                  </td>
-                  <button
-                    type="button"
-                    data-testid={ `
-                  customer_checkout__element-order-table-remove-${index}` }
-                    id={ product.productId }
-                    onClick={ (e) => {
-                      removeFromCart(e);
-                    } }
-                  >
-                    Remover
+                    </td>
+                    <td
+                      data-testid={
+                        `customer_checkout__element-order-table-sub-total-${index}`
+                      }
+                    >
+                      {product.subTotal}
 
-                  </button>
-                </tr>
-              ))
-            }
-          </tbody>
-          {`Total: R$ ${0.00.toFixed(2)}`}
-        </table>
+                    </td>
+                    <button
+                      type="button"
+                      data-testid={
+                        `customer_checkout__element-order-table-remove-${index}`
+                      }
+                      id={ product.productId }
+                      onClick={ (e) => {
+                        this.removeFromCart(e);
+                      } }
+                    >
+                      Remover
+
+                    </button>
+                  </tr>
+                ))
+              }
+            </tbody>
+            <h1
+              data-testid="customer_checkout__element-order-total-price"
+            >
+              {
+                `Total: R$ ${totalPrice}`
+              }
+            </h1>
+
+          </table>
+
+        </div>
+
+        <button
+          type="button"
+          data-testid="customer_checkout__button-submit-order"
+        >
+          Finalizar pedido
+        </button>
 
       </div>
-
-      <button
-        type="button"
-        data-testid="customer_checkout__button-submit-order"
-      >
-        Finalizar pedido
-      </button>
-
-    </div>
-  );
+    );
+  }
 }
 
 export default CheckoutCustomer;
