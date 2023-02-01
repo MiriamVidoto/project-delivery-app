@@ -1,0 +1,128 @@
+import React, { useState, useEffect } from 'react';
+import NavBar from '../components/navbar';
+import { getDataFromLocalStorage } from '../utils/localStorage';
+import getSellers from '../api/sellers';
+import postSales from '../api/sales';
+import CheckoutCard from '../components/CheckoutCard';
+
+export default function CheckoutCustomer() {
+  const [user, setUser] = useState({ name: '' });
+  const [sellers, setSellers] = useState([{ name: '', id: '' }]);
+  const [sellerSelected, setSellerSelected] = useState(1);
+  const [totalPriceCart, setTotalPriceCart] = useState(0);
+  const [address, setAddress] = useState('');
+  const [number, setNumber] = useState('');
+  const [productsCart, setProductsCart] = useState([]);
+
+  const newSale = () => {
+    const sale = {
+      userId: user.id,
+      sellerId: sellerSelected,
+      totalPrice: totalPriceCart,
+      deliveryAddress: address,
+      deliveryNumber: number,
+      products: productsCart.map((e) => {
+        const { productId, quantity } = e;
+        return { productId, quantity };
+      }),
+    };
+    return sale;
+  };
+
+  const setDatasLocalStorage = () => {
+    const total = getDataFromLocalStorage('shoppingCartTotal');
+    const fixTotal = total.replace(',', '.');
+    if (total) setTotalPriceCart(fixTotal);
+
+    const cart = getDataFromLocalStorage('productsCart');
+    if (cart) setProductsCart(cart);
+  };
+
+  const handleClick = async () => {
+    setDatasLocalStorage();
+    const sale = newSale();
+
+    console.log(sale);
+
+    const post = await postSales(sale);
+    if (post) console.log('sucess');
+  };
+
+  const getDatas = async () => {
+    const userData = getDataFromLocalStorage('user');
+    if (user) setUser(userData);
+    const sellersData = await getSellers();
+    if (sellers) setSellers(sellersData);
+    setDatasLocalStorage();
+  };
+
+  useEffect(() => {
+    getDatas();
+  }, []);
+
+  return (
+    <div>
+      <NavBar path="customer" name={ user.name } />
+      <h1>Checkout Customer</h1>
+
+      <div>
+        <h3> Detalhes e Endereço para Entrega</h3>
+
+        <label htmlFor="select">
+          <select
+            id="select"
+            name="select"
+            data-testid="customer_checkout__select-seller"
+            value={ sellerSelected }
+            onChange={ (e) => setSellerSelected(e) }
+          >
+            {
+              sellers.map((seller) => (
+                <option
+                  key={ seller.id }
+                  value={ seller }
+                >
+                  { seller.name }
+                </option>
+              ))
+            }
+          </select>
+        </label>
+
+        <label htmlFor="inputText">
+          Endereço
+          <input
+            type="text"
+            id="inputText"
+            data-testid="customer_checkout__input-address"
+            value={ address }
+            onChange={ (e) => setAddress(e.target.value) }
+          />
+        </label>
+
+        <label htmlFor="inputText">
+          Número
+          <input
+            type="text"
+            id="inputText"
+            data-testid="customer_checkout__input-address-number"
+            value={ number }
+            onChange={ (e) => setNumber(e.target.value) }
+          />
+        </label>
+
+        <h4>Finalizar Pedido</h4>
+        <CheckoutCard />
+      </div>
+
+      <button
+        type="button"
+        data-testid="customer_checkout__button-submit-order"
+        onClick={ handleClick }
+      >
+        Finalizar pedido
+      </button>
+
+    </div>
+  );
+}
