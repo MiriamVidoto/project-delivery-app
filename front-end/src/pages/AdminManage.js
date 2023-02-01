@@ -8,10 +8,10 @@ export default function AdminManage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('Vendedor');
+  const [role, setRole] = useState('');
   const [response, setResponse] = useState('');
   const [reset, setReset] = useState(false);
-  const [message, setMessage] = useState('');
+  const [message, setMessage] = useState('seller');
 
   const user = getDataFromLocalStorage('user');
 
@@ -19,7 +19,7 @@ export default function AdminManage() {
     setName('');
     setEmail('');
     setPassword('');
-    setRole('Vendedor');
+    setRole('seller');
   };
 
   useEffect(() => {
@@ -36,17 +36,19 @@ export default function AdminManage() {
   };
 
   const createRegisterByAdmin = async () => {
-    if (role === 'Vendedor') setRole('seller');
     if (role === 'Cliente') setRole('customer');
     if (role === 'Administrador') setRole('administrator');
+    if (role === 'Vendedor') setRole('seller');
     const data = { newRegister: { name, email, password, role } };
     const responseRegister = await postRegisterAdmin(data, user.token);
-    console.log(responseRegister);
     if (!responseRegister) {
       setResponse('ERRO!');
-      setMessage('Verifique as credencioais ou os dados');
+      setMessage('Verifique as credenciais ou os dados');
     }
-    if (responseRegister) setResponse('Usuário criado com sucesso!');
+    if (responseRegister) {
+      setResponse('Usuário criado com sucesso!');
+      setMessage('');
+    }
     setReset(!reset);
   };
 
@@ -113,7 +115,7 @@ export default function AdminManage() {
       <span>{response}</span>
       {
         message.length > 0
-        && <span data-testid="admin_manage__element-invalid-register">{ message}</span>
+        && <span data-testid="admin_manage__element-invalid-register">{ message }</span>
       }
     </div>
   );

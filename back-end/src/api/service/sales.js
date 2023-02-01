@@ -35,8 +35,27 @@ const ordersCustomer = async (id) => {
   return { status: 200, message: sales };
 };
 
+const orderDetails = async (id) => {
+  const sale = await Sale.findOne({
+    where: { id },
+    raw: true,
+  });
+  if (!sale) {
+    return { status: 404, message: 'sale not found' };
+  }
+
+  const products = await SaleProducts.findAll(
+    { where: { saleId: sale.id },
+      raw: true,
+    },
+    );
+
+  return { status: 200, message: { ...sale, products } };
+};
+
 module.exports = {
     checkoutSale,
     ordersSeller,
     ordersCustomer,
+    orderDetails,
 };

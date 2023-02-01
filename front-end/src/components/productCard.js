@@ -63,7 +63,7 @@ function ProductCard() {
         oldCart.splice(existProduct, 1);
       }
       if (newProduct.quantity !== 0) {
-        oldCart.push(newProduct);
+        oldCart.splice(existProduct, 0, newProduct);
       }
       setData('productsCart', oldCart);
     }

@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postRegister from '../api/register';
+import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Register() {
   const [name, setName] = useState('');
@@ -24,6 +25,7 @@ export default function Register() {
     const newPostRegister = await postRegister(newRegister);
     if (newPostRegister === undefined) setInvalid(true);
     else if (newPostRegister.status === created) {
+      setDataToLocalStorage('user', newPostRegister.data);
       return newPostRegister && navigate.push('/customer/products');
     }
   };

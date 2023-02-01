@@ -17,8 +17,15 @@ const ordersCustomer = async (req, res) => {
   return res.status(result.status).json(result.message);
 };
 
+const orderDetails = async (req, res) => {
+  const { id } = req.params;
+  const result = await service.orderDetails(id);
+  return res.status(result.status).json(result.message);
+};
+
 module.exports = {
   checkoutSale,
   ordersSeller, 
   ordersCustomer,
+  orderDetails,
 };
