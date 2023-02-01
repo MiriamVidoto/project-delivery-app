@@ -35,8 +35,10 @@ module.exports = (sequelize) => {
     },
     saleDate: {
       type: DataTypes.DATE,
-      allowNull: false,
     },
+    status: {
+        type: DataTypes.STRING,
+    }
   },{
     tableName: 'sales',
     underscored: true,
@@ -52,14 +54,6 @@ module.exports = (sequelize) => {
     Sale.associate = (models) => {
     Sale.belongsTo(models.User, {
       foreignKey:'user_id',
-      as: 'user_id',
-    });
-  }
-
-  Sale.associate = (models) => {
-    Sale.belongsTo(models.User, {
-      foreignKey:'user_id',
-      as: 'seller_id',
     });
   }
 

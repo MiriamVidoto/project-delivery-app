@@ -49,6 +49,7 @@ module.exports = {
       },
       saleDate: {
         type: DataTypes.DATE,
+        field: 'sale_date',
         defaultValue: fn('NOW'),
       },
       status: {
