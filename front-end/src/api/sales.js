@@ -6,7 +6,7 @@ const postSales = async (data) => {
   try {
     const response = await API
       .post('/sales', data);
-    return response;
+    return response.data;
   } catch (error) {
     console.log('catch', error.stack);
   }

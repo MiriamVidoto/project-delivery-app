@@ -23,7 +23,6 @@ module.exports = {
       },
       sellerId: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         field: 'seller_id',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',

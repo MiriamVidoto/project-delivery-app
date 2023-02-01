@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavBar from '../components/navbar';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 import getSellers from '../api/sellers';
@@ -13,6 +14,8 @@ export default function CheckoutCustomer() {
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
   const [productsCart, setProductsCart] = useState([]);
+
+  const history = useHistory();
 
   const newSale = () => {
     const sale = {
@@ -41,11 +44,11 @@ export default function CheckoutCustomer() {
   const handleClick = async () => {
     setDatasLocalStorage();
     const sale = newSale();
-
-    console.log(sale);
-
     const post = await postSales(sale);
-    if (post) console.log('sucess');
+    console.log(post);
+    const { id } = post;
+    console.log(id);
+    if (post) history.push(`/customer/orders/${id}/`);
   };
 
   const getDatas = async () => {
@@ -74,14 +77,11 @@ export default function CheckoutCustomer() {
             name="select"
             data-testid="customer_checkout__select-seller"
             value={ sellerSelected }
-            onChange={ (e) => setSellerSelected(e) }
+            onChange={ (e) => setSellerSelected(e.key) }
           >
             {
               sellers.map((seller) => (
-                <option
-                  key={ seller.id }
-                  value={ seller }
-                >
+                <option key={ seller.id }>
                   { seller.name }
                 </option>
               ))

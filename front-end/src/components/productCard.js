@@ -58,12 +58,16 @@ function ProductCard() {
     if (!oldCart || oldCart === null) {
       setData('productsCart', [newProduct]);
     } else {
-      const existProduct = oldCart.findIndex((e) => e.productId === newProduct.productId);
-      if (existProduct >= 0) {
-        oldCart.splice(existProduct, 1);
+      const existProduct = oldCart.some((e) => e.productId === newProduct.productId);
+      if (!existProduct) {
+        oldCart.push(newProduct);
+      }
+      const indexProduct = oldCart.findIndex((e) => e.productId === newProduct.productId);
+      if (indexProduct >= 0) {
+        oldCart.splice(indexProduct, 1);
       }
       if (newProduct.quantity !== 0) {
-        oldCart.splice(existProduct, 0, newProduct);
+        oldCart.splice(indexProduct, 0, newProduct);
       }
       setData('productsCart', oldCart);
     }
