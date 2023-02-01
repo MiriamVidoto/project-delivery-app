@@ -45,10 +45,8 @@ export default function CheckoutCustomer() {
     setDatasLocalStorage();
     const sale = newSale();
     const post = await postSales(sale);
-    console.log(post);
     const { id } = post;
-    console.log(id);
-    if (post) history.push(`/customer/orders/${id}/`);
+    if (post) history.push(`/customer/orders/${id}`);
   };
 
   const getDatas = async () => {
