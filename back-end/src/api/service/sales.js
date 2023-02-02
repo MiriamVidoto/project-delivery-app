@@ -43,23 +43,15 @@ const orderDetails = async (id) => {
   if (!sale) {
     return { status: 404, message: 'sale not found' };
   }
-
   const { name } = await User.findOne(
-    { where: { id: sale.sellerId },
-      raw: true,
-    },
+    { where: { id: sale.sellerId }, raw: true },
   );
   const sellerName = name;
-
-  const products = await SaleProducts.findAll(
-    { where: { saleId: sale.id },
-      raw: true,
-    },
-  );
   
-  const data = await { ...sale, sellerName, products }
-
-  return { status: 200, message: data };
+  const products = await SaleProducts.findAll(
+    { where: { saleId: sale.id }, raw: true },
+  );
+  return { status: 200, message: { ...sale, sellerName, products } };
 };
 
 module.exports = {
