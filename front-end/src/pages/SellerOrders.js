@@ -1,8 +1,9 @@
+import getSellerOrders from '../api/sellerOrders';
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
-export default function SellerOrders() {
+export default async function SellerOrders() {
   const sales = [
     {
       id: 1,
@@ -15,10 +16,15 @@ export default function SellerOrders() {
       status: 'pendente',
     },
   ];
-
   const LIMIT = 10;
   const path = 'seller';
   const user = getDataFromLocalStorage('user');
+
+  const getSellerOrdersById = async (id) => {
+    const sellerOrders = await getSellerOrders(id);
+    return sellerOrders;
+  };
+  console.log('sellerOrders', await getSellerOrdersById({ id: user.id }));
 
   return (
     <div>

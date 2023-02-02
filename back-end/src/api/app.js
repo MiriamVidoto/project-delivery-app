@@ -16,7 +16,7 @@ app.post('/users/register', controllerUsers.register);
 app.post('/users/register/admin', controllerUsers.adminRegister);
 app.get('/users/sellers', controllerUsers.getSellers);
 app.get('/customer/products', controllerCostumerProducts.costumerProducts);
-app.get('/sales/seller', controllerSales.ordersSeller);
+app.get('/sales/seller/:id', controllerSales.ordersSeller);
 app.get('/sales/customer', controllerSales.ordersCustomer);
 app.get('/sales/details/:id', controllerSales.orderDetails);
 app.post('/sales', controllerSales.checkoutSale);

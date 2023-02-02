@@ -1,10 +1,11 @@
 import axios from 'axios';
 
-const API = axios.create({ baseURL: 'http://localhost:3001' });
-
 const getSellerOrders = async (id) => {
+  console.log('api', id);
   try {
-    const response = await API.post('/seller/orders', id);
+    const response = await axios.get(`http://localhost:3001/sales/seller/:${id}`);
+    console.log('api front', response);
+
     return response.message;
   } catch (error) {
     console.log('catch', error.stack);
