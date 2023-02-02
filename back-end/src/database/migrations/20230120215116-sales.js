@@ -53,7 +53,7 @@ module.exports = {
       },
       status: {
         type: DataTypes.STRING,
-        defaultValue: 'pendente',
+        defaultValue: 'Pendente',
       },
     });
   },

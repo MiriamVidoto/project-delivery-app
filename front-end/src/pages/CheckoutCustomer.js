@@ -9,7 +9,7 @@ import CheckoutCard from '../components/CheckoutCard';
 export default function CheckoutCustomer() {
   const [user, setUser] = useState({ name: '' });
   const [sellers, setSellers] = useState([{ name: '', id: '' }]);
-  const [sellerSelected, setSellerSelected] = useState(1);
+  const [sellerSelected, setSellerSelected] = useState(null);
   const [totalPriceCart, setTotalPriceCart] = useState(0);
   const [address, setAddress] = useState('');
   const [number, setNumber] = useState('');
@@ -75,11 +75,17 @@ export default function CheckoutCustomer() {
             name="select"
             data-testid="customer_checkout__select-seller"
             value={ sellerSelected }
-            onChange={ (e) => setSellerSelected(e.key) }
+            onChange={ (e) => setSellerSelected(e.target.value) }
           >
+            <option value="" disabled selected>
+              Selecione um vendedor
+            </option>
             {
               sellers.map((seller) => (
-                <option key={ seller.id }>
+                <option
+                  key={ seller.id }
+                  value={ seller.id }
+                >
                   { seller.name }
                 </option>
               ))
