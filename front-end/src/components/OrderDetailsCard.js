@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function OrderDetailsCard({ products, total }) {
-  const prefix = 'seller_order_details__element-order-';
+export default function OrderDetailsCard({ path, products, total }) {
+  const prefix = `${path}_order_details__element-order-`;
+  const price = 1;
 
   return (
     <div>
@@ -18,13 +19,13 @@ export default function OrderDetailsCard({ products, total }) {
         </thead>
         <tbody>
           {
-            products.map(({ product, quantity, price }, i) => (
+            products.map(({ productId, quantity }, i) => (
               <tr key={ i }>
                 <th data-testid={ `${prefix}table-item-number-${i}` }>
-                  {i}
+                  {(i + 1)}
                 </th>
                 <th data-testid={ `${prefix}table-name-${i}` }>
-                  {product}
+                  {productId}
                 </th>
                 <th data-testid={ `${prefix}table-quantity-${i}` }>
                   {quantity}
@@ -48,10 +49,11 @@ export default function OrderDetailsCard({ products, total }) {
 }
 
 OrderDetailsCard.propTypes = {
+  path: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape({
     product: PropTypes.string,
     quantity: PropTypes.number,
     price: PropTypes.number,
   })).isRequired,
-  total: PropTypes.number.isRequired,
+  total: PropTypes.string.isRequired,
 };

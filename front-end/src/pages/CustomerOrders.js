@@ -3,18 +3,28 @@ import OrderCard from '../components/OrderCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function CustomerOrders() {
-  const sales = [
-    {
-      id: 2,
-      user_id: 3,
-      seller_id: 5,
-      totalPrice: 10.95,
-      deliveryAddress: 'endereço',
-      deliveryNumber: 23,
-      saleDate: 'data',
-      status: 'pendente',
-    },
-  ];
+  const [sales, setSales] = useState([]);
+  // const sales = [
+  //   {
+  //     id: 2,
+  //     user_id: 3,
+  //     seller_id: 5,
+  //     totalPrice: 10.95,
+  //     deliveryAddress: 'endereço',
+  //     deliveryNumber: 23,
+  //     saleDate: 'data',
+  //     status: 'pendente',
+  //   },
+  // ];
+
+  const getDatas = async () => {
+    const saleData = await getDataFromLocalStorage();
+    setSales(saleData);
+  };
+
+  useEffect(() => {
+    getDatas();
+  }, []);
 
   const LIMIT = 10;
   const path = 'customer';
