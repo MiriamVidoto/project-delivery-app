@@ -8,6 +8,7 @@ import Register from './pages/Register';
 import SellerOrders from './pages/SellerOrders';
 import SellerOrderDetails from './pages/SellerOrderDetails';
 import AdminManage from './pages/AdminManage';
+import CheckoutCustomer from './pages/CheckoutCustomer';
 import CustomerOrders from './pages/CustomerOrders';
 import CustomerOrderDetails from './pages/CustomerOrderDetails';
 import CheckoutCustomer from './pages/CheckoutCustomer';
