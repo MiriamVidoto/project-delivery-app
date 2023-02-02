@@ -1,185 +1,132 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import NavBar from '../components/navbar';
-import { getDataFromLocalStorage, setDataToLocalStorage } from '../utils/localStorage';
+import { getDataFromLocalStorage } from '../utils/localStorage';
+import getSellers from '../api/sellers';
+import postSales from '../api/sales';
+import CheckoutCard from '../components/CheckoutCard';
 
-class CheckoutCustomer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      cartItems: [],
-      totalPrice: 0.00,
+export default function CheckoutCustomer() {
+  const [user, setUser] = useState({ name: '' });
+  const [sellers, setSellers] = useState([{ name: '', id: '' }]);
+  const [sellerSelected, setSellerSelected] = useState(null);
+  const [totalPriceCart, setTotalPriceCart] = useState(0);
+  const [address, setAddress] = useState('');
+  const [number, setNumber] = useState('');
+  const [productsCart, setProductsCart] = useState([]);
+
+  const history = useHistory();
+
+  const newSale = () => {
+    const sale = {
+      userId: user.id,
+      sellerId: sellerSelected,
+      totalPrice: totalPriceCart,
+      deliveryAddress: address,
+      deliveryNumber: number,
+      products: productsCart.map((e) => {
+        const { productId, quantity } = e;
+        return { productId, quantity };
+      }),
     };
-  }
-
-  componentDidMount() {
-    const cartItems = getDataFromLocalStorage('productsCart');
-    if (cartItems) {
-      this.setState({
-        cartItems,
-      }, () => this.totalPriceCartItems());
-    }
-  }
-
-  totalPriceCartItems = () => {
-    const cartItems = getDataFromLocalStorage('productsCart');
-    console.log(cartItems);
-    if (cartItems) {
-      const total = cartItems.map((item) => item.unitPrice * item.quantity)
-        .reduce((curr, acc) => acc + curr, 0)
-        .toFixed(2)
-        .replace(/\./, ',');
-      this.setState({
-        totalPrice: total,
-      });
-    }
+    return sale;
   };
 
-  removeFromCart = ({ target }) => {
-    const { id } = target;
-    const cartItemsOld = getDataFromLocalStorage('productsCart');
-    const newCartItems = cartItemsOld.filter(
-      (item) => item.productId !== Number(id),
-    );
-    this.setState({
-      cartItems: newCartItems,
-    });
-    setDataToLocalStorage('productsCart', newCartItems);
-    this.totalPriceCartItems();
+  const setDatasLocalStorage = () => {
+    const total = getDataFromLocalStorage('shoppingCartTotal');
+    const fixTotal = total.replace(',', '.');
+    if (total) setTotalPriceCart(fixTotal);
+
+    const cart = getDataFromLocalStorage('productsCart');
+    if (cart) setProductsCart(cart);
   };
 
-  render() {
-    const { cartItems, totalPrice } = this.state;
-    return (
+  const handleClick = async () => {
+    setDatasLocalStorage();
+    const sale = newSale();
+    const post = await postSales(sale, user.token);
+    const { id } = post;
+    if (post) history.push(`/customer/orders/${id}`);
+  };
+
+  const getDatas = async () => {
+    const userData = getDataFromLocalStorage('user');
+    if (user) setUser(userData);
+    const sellersData = await getSellers();
+    if (sellers) setSellers(sellersData);
+    setDatasLocalStorage();
+  };
+
+  useEffect(() => {
+    getDatas();
+  }, []);
+
+  return (
+    <div>
+      <NavBar path="customer" name={ user.name } />
+      <h1>Checkout Customer</h1>
+
       <div>
-        <NavBar />
-        <h1>Checkout Customer</h1>
+        <h3> Detalhes e Endereço para Entrega</h3>
 
-        <div>
-          <h3> Detalhes e Endereço para Entrega</h3>
+        <label htmlFor="select">
+          <select
+            id="select"
+            name="select"
+            data-testid="customer_checkout__select-seller"
+            value={ sellerSelected }
+            onChange={ (e) => setSellerSelected(e.target.value) }
+          >
+            <option value="" disabled selected>
+              Selecione um vendedor
+            </option>
+            {
+              sellers.map((seller) => (
+                <option
+                  key={ seller.id }
+                  value={ seller.id }
+                >
+                  { seller.name }
+                </option>
+              ))
+            }
+          </select>
+        </label>
 
-          <label htmlFor="select">
-            P. Vendedora Responsável:
-            <select
-              id="select"
-              data-testid="customer_checkout__select-seller"
-            >
-              <option value="nomes dos vendedores">Nomes dos vendedores</option>
-            </select>
-          </label>
+        <label htmlFor="inputText">
+          Endereço
+          <input
+            type="text"
+            id="inputText"
+            data-testid="customer_checkout__input-address"
+            value={ address }
+            onChange={ (e) => setAddress(e.target.value) }
+          />
+        </label>
 
-          <label htmlFor="inputText">
-            Endereço
-            <input
-              type="text"
-              id="inputText"
-              data-testid="customer_checkout__input-address"
-            />
-          </label>
+        <label htmlFor="inputText">
+          Número
+          <input
+            type="text"
+            id="inputText"
+            data-testid="customer_checkout__input-address-number"
+            value={ number }
+            onChange={ (e) => setNumber(e.target.value) }
+          />
+        </label>
 
-          <label htmlFor="inputText">
-            Número
-            <input
-              type="text"
-              id="inputText"
-              data-testid="customer_checkout__input-address-number"
-            />
-          </label>
-
-          <h4>Finalizar Pedido</h4>
-
-          <table id="table">
-            <thead>
-              <th>Item</th>
-              <th>Descrição</th>
-              <th>Quantidade</th>
-              <th>Valor Unitário</th>
-              <th>Sub-total</th>
-              <th>Remover item</th>
-            </thead>
-
-            <tbody>
-              {
-                cartItems.map((product, index) => (
-
-                  <tr key={ product.name }>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-item-number-${index}`
-                      }
-                    >
-                      {index + 1 }
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-name-${index}`
-                      }
-                    >
-                      {product.name}
-
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-quantity-${index}`
-                      }
-                    >
-                      {product.quantity}
-
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-unit-price-${index}`
-                      }
-                    >
-                      {product.unitPrice.replace(/\./, ',')}
-
-                    </td>
-                    <td
-                      data-testid={
-                        `customer_checkout__element-order-table-sub-total-${index}`
-                      }
-                    >
-                      {product.subTotal}
-
-                    </td>
-                    <button
-                      type="button"
-                      data-testid={
-                        `customer_checkout__element-order-table-remove-${index}`
-                      }
-                      id={ product.productId }
-                      onClick={ (e) => {
-                        this.removeFromCart(e);
-                      } }
-                    >
-                      Remover
-
-                    </button>
-                  </tr>
-                ))
-              }
-            </tbody>
-            <h3
-              data-testid="customer_checkout__element-order-total-price"
-            >
-              {
-                `${totalPrice}`
-              }
-            </h3>
-
-          </table>
-
-        </div>
-
-        <button
-          type="button"
-          data-testid="customer_checkout__button-submit-order"
-        >
-          Finalizar pedido
-        </button>
-
+        <h4>Finalizar Pedido</h4>
+        <CheckoutCard />
       </div>
-    );
-  }
-}
 
-export default CheckoutCustomer;
+      <button
+        type="button"
+        data-testid="customer_checkout__button-submit-order"
+        onClick={ handleClick }
+      >
+        Finalizar pedido
+      </button>
+
+    </div>
+  );
+}

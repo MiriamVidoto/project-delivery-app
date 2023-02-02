@@ -9,7 +9,7 @@ const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products 
     const saleId = newSale.id;
     await SaleProducts.create({ saleId, ...e });
   });
-  if (newSale) return { status: 201, message: 'Created' };
+  if (newSale) return { status: 201, message: newSale };
   return { status: 404, message: 'Failed' };
 };
 

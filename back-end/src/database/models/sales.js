@@ -15,7 +15,6 @@ module.exports = (sequelize) => {
     },
     sellerId: {
       type: DataTypes.INTEGER,
-      allowNull: false,
       field: 'seller_id'
     },
     totalPrice: {

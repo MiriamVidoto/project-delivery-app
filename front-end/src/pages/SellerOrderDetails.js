@@ -13,7 +13,7 @@ export default function SellerOrderDetails() {
     sale_date: '',
     status: '',
     products: [
-      { product: 'produto1', price: 1.99, quantity: 3 },
+      { product: 'produto2', price: 1.99, quantity: 3 },
       { product: 'produto3', price: 3.99, quantity: 2 },
       { product: 'produto7', price: 9.99, quantity: 5 },
     ],
