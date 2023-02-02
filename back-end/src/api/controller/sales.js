@@ -6,9 +6,8 @@ const checkoutSale = async (req, res) => {
 };
 
 const ordersSeller = async (req, res) => {
-  // const { id } = req.body;
-  console.log('params', req.params);
-  const result = await service.ordersSeller(req.params);
+  const { id } = req.params;
+  const result = await service.ordersSeller(id);
   return res.status(result.status).json(result.message);
 };
 
