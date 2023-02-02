@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function OrderDetailsCard({ products, total }) {
-  const prefix = 'seller_order_details__element-order-';
+export default function OrderDetailsCard({ path, products, total }) {
+  const prefix = `${path}_order_details__element-order-`;
 
   return (
     <div>
@@ -48,6 +48,7 @@ export default function OrderDetailsCard({ products, total }) {
 }
 
 OrderDetailsCard.propTypes = {
+  path: PropTypes.string.isRequired,
   products: PropTypes.arrayOf(PropTypes.shape({
     product: PropTypes.string,
     quantity: PropTypes.number,

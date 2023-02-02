@@ -28,7 +28,7 @@ export default function SellerOrderDetails() {
       <div>
         <h1>Detalhe do pedido</h1>
         <div>
-          <span data-testid={ `${prefix}element-order-details-label-order-${id}` }>
+          <span data-testid={ `${prefix}element-order-details-label-order-id` }>
             {` Pedido ${order.id}`}
           </span>
           <span data-testid={ `${prefix}element-order-details-label-order-date` }>
@@ -51,7 +51,11 @@ export default function SellerOrderDetails() {
           </button>
         </div>
       </div>
-      <OrderDetailsCard products={ order.products } total={ order.totalPrice } />
+      <OrderDetailsCard
+        path="seller"
+        products={ order.products }
+        total={ order.totalPrice }
+      />
     </div>
   );
 }

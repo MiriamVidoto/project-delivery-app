@@ -30,8 +30,11 @@ export default function CustomerOrderDetails() {
       <div>
         <h1>Detalhe do pedido</h1>
         <div>
-          <span data-testid={ `${prefix}element-order-details-label-order-${order.id}` }>
+          <span data-testid={ `${prefix}element-order-details-label-order-id` }>
             {` Pedido ${order.id}`}
+          </span>
+          <span data-testid={ `${prefix}element-order-details-label-seller-name` }>
+            P Vend:
           </span>
           <span data-testid={ `${prefix}element-order-details-label-order-date` }>
             { order.sale_date }
@@ -47,7 +50,11 @@ export default function CustomerOrderDetails() {
           </button>
         </div>
       </div>
-      <OrderDetailsCard products={ order.products } total={ order.totalPrice } />
+      <OrderDetailsCard
+        path="customer"
+        products={ order.products }
+        total={ order.totalPrice }
+      />
     </div>
   );
 }
