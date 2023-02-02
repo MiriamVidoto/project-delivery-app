@@ -1,4 +1,4 @@
-const { Sale, SaleProducts, Products, User } = require('../../database/models');
+const { Sale, SaleProducts, User } = require('../../database/models');
 
 const checkoutSale = async (data) => {
 const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = data;
@@ -49,29 +49,17 @@ const orderDetails = async (id) => {
       raw: true,
     },
   );
-
   const sellerName = name;
 
-  const productsIds = await SaleProducts.findAll(
+  const products = await SaleProducts.findAll(
     { where: { saleId: sale.id },
       raw: true,
     },
-    );
+  );
+  
+  const data = await { ...sale, sellerName, products }
 
-  const products = await  productsIds.map(async (product) => {
-    const dataProduct = await Products.findOne(
-      { where: { id: product.productId },
-        raw: true,
-      },
-      )
-    const { name, price } = dataProduct;
-    const { productId, quantity } = product;
-    return { productId, name, price, quantity };
-    })
-
-  console.log(products);
-
-  return { status: 200, message: { ...sale, sellerName,  products } };
+  return { status: 200, message: data };
 };
 
 module.exports = {
