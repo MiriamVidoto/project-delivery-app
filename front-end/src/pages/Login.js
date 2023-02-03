@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
 import { setDataToLocalStorage, getDataFromLocalStorage } from '../utils/localStorage';
 
-
 export default function Login() {
   const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,7 +22,6 @@ export default function Login() {
       history.push('/admin/manage');
     }
   };
-
 
   const redirectToRoute = () => {
     const user = getDataFromLocalStorage('user');
@@ -51,14 +49,13 @@ export default function Login() {
   //   }
   // };
 
-//   useEffect(() => {
-//     const user = getDataFromLocalStorage('user');
-//     if (user) {
-//       const { role } = user;
-//       redirect(role);
-//     }
-//   }, []);
-
+  //   useEffect(() => {
+  //     const user = getDataFromLocalStorage('user');
+  //     if (user) {
+  //       const { role } = user;
+  //       redirect(role);
+  //     }
+  //   }, []);
 
   const validateLogin = async (newPost) => {
     const sucess = 200;

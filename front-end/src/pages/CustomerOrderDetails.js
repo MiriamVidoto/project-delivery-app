@@ -12,7 +12,6 @@ export default function CustomerOrderDetails() {
   const [saleProducts, setSaleProducts] = useState();
   const [disable, setDisable] = useState(true);
 
-
   const { id } = useParams();
   const user = getDataFromLocalStorage('user');
   const path = 'customer';
