@@ -31,9 +31,9 @@ export default function OrderCard({ order, path }) {
 OrderCard.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number,
-    totalPrice: PropTypes.number,
+    totalPrice: PropTypes.string,
     deliveryAddress: PropTypes.string,
-    deliveryNumber: PropTypes.number,
+    deliveryNumber: PropTypes.string,
     saleDate: PropTypes.string,
     status: PropTypes.string,
   }).isRequired,

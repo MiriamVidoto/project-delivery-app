@@ -2,13 +2,13 @@ import axios from 'axios';
 
 const API = axios.create({ baseURL: 'http://localhost:3001' });
 
-const getSellerOrders = async (id) => {
+const getCostumerOrders = async (id) => {
   try {
-    const response = await API.get(`/sales/seller/${id}`);
+    const response = await API.get(`/sales/customer/${id}`);
     return response.data;
   } catch (error) {
     console.log('catch', error.stack);
   }
 };
 
-export default getSellerOrders;
+export default getCostumerOrders;

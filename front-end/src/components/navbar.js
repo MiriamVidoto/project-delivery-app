@@ -17,14 +17,14 @@ export default function NavBar({ path, name }) {
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-products"
-            onClick={ () => history.push('/products') }
+            onClick={ () => history.push('/customer/products') }
           >
             Produtos
           </button>
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
-            onClick={ () => history.push('') }
+            onClick={ () => history.push('/customer/orders') }
           >
             Meus pedidos
           </button>

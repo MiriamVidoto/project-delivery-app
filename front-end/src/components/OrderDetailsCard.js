@@ -5,6 +5,8 @@ export default function OrderDetailsCard({ path, products, total }) {
   const prefix = `${path}_order_details__element-order-`;
   const price = 1;
 
+  console.log(products);
+
   return (
     <div>
       <table>
@@ -19,22 +21,22 @@ export default function OrderDetailsCard({ path, products, total }) {
         </thead>
         <tbody>
           {
-            products.map(({ productId, quantity }, i) => (
+            products.map((e, i) => (
               <tr key={ i }>
                 <th data-testid={ `${prefix}table-item-number-${i}` }>
                   {(i + 1)}
                 </th>
                 <th data-testid={ `${prefix}table-name-${i}` }>
-                  {productId}
+                  {e.productId}
                 </th>
                 <th data-testid={ `${prefix}table-quantity-${i}` }>
-                  {quantity}
+                  {e.quantity}
                 </th>
                 <th data-testid={ `${prefix}table-unit-price-${i}` }>
                   {price}
                 </th>
                 <th data-testid={ `${prefix}table-sub-total-${i}` }>
-                  {(price * quantity).toFixed(2)}
+                  {(price * e.quantity).toFixed(2)}
                 </th>
               </tr>
             ))

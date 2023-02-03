@@ -1,4 +1,4 @@
-const { Sale, SaleProducts, User } = require('../../database/models');
+const { Sale, SaleProducts, User, Products } = require('../../database/models');
 
 const checkoutSale = async (data) => {
 const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = data;
@@ -47,9 +47,9 @@ const orderDetails = async (id) => {
     { where: { id: sale.sellerId }, raw: true },
   );
   const sellerName = name;
-  
+
   const products = await SaleProducts.findAll(
-    { where: { saleId: sale.id }, raw: true },
+    { where: { saleId: sale.id }, include: [{ model: Products, as: 'products' }], raw: true },
   );
   return { status: 200, message: { ...sale, sellerName, products } };
 };
