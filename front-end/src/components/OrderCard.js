@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 export default function OrderCard({ order, path }) {
   return (
-    <Link to={ `/seller/orders/${order.id}}` }>
+    <Link to={ `/${path}/orders/${order.id}` }>
       <span data-testid={ `${path}_orders__element-order-id-${order.id}` }>
         {`Pedido ${order.id}`}
       </span>
@@ -31,7 +31,7 @@ export default function OrderCard({ order, path }) {
 OrderCard.propTypes = {
   order: PropTypes.shape({
     id: PropTypes.number,
-    totalPrice: PropTypes.number,
+    totalPrice: PropTypes.string,
     deliveryAddress: PropTypes.string,
     deliveryNumber: PropTypes.number,
     saleDate: PropTypes.string,
