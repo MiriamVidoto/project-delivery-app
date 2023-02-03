@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+// import React, { useEffect } from 'react';
+// import { useHistory } from 'react-router-dom';
 
-function Home() {
-  const history = useHistory();
+// function Home() {
+//   const history = useHistory();
 
-  const path = () => {
-    const user = localStorage.getItem('user');
-    if (!user) {
-      history.push('/login');
-    }
-  };
+//   const path = () => {
+//     const user = localStorage.getItem('user');
+//     if (!user) {
+//       history.push('/login');
+//     }
+//   };
+
 
   useEffect(() => {
     path();
@@ -18,4 +19,5 @@ function Home() {
   return <div>home</div>;
 }
 
-export default Home;
+
+// export default Home;

@@ -8,8 +8,10 @@ import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function CustomerOrderDetails() {
   const [order, setOrder] = useState();
+
   const [saleProducts, setSaleProducts] = useState();
   const [disable, setDisable] = useState(true);
+
 
   const { id } = useParams();
   const user = getDataFromLocalStorage('user');

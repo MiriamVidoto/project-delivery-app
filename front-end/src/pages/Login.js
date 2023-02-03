@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
 import { setDataToLocalStorage, getDataFromLocalStorage } from '../utils/localStorage';
 
+
 export default function Login() {
   const [userEmail, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -23,6 +24,7 @@ export default function Login() {
     }
   };
 
+
   const redirectToRoute = () => {
     const user = getDataFromLocalStorage('user');
     if (user) redirect(user.role);
@@ -36,6 +38,27 @@ export default function Login() {
     const numberSix = 6;
     return validate(userEmail) && password.length >= numberSix;
   };
+
+  // const redirect2 = (role) => {
+  //   if (role === 'customer') {
+  //     history.push('/customer/orders');
+  //   }
+  //   if (role === 'seller') {
+  //     history.push('/seller/orders');
+  //   }
+  //   if (role === 'administrator') {
+  //     history.push('/admin/manage');
+  //   }
+  // };
+
+//   useEffect(() => {
+//     const user = getDataFromLocalStorage('user');
+//     if (user) {
+//       const { role } = user;
+//       redirect(role);
+//     }
+//   }, []);
+
 
   const validateLogin = async (newPost) => {
     const sucess = 200;
