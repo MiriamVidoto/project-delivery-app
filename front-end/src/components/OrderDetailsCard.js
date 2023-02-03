@@ -54,5 +54,6 @@ OrderDetailsCard.propTypes = {
     quantity: PropTypes.number,
     price: PropTypes.number,
   })).isRequired,
+
   total: PropTypes.string.isRequired,
 };
