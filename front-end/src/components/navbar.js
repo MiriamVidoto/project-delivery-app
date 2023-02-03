@@ -31,12 +31,13 @@ export default function NavBar({ path, name }) {
         </>
       ) }
       { path === 'seller' && (
-        <Link
-          to="/seller/orders"
+        <button
+          type="button"
           data-testid="customer_products__element-navbar-link-orders"
+          onClick={ () => history.push('/seller/orders') }
         >
           PEDIDOS
-        </Link>
+        </button>
       )}
       { path === 'admin' && (
         <span data-testid="customer_products__element-navbar-link-orders">
