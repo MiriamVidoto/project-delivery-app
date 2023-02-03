@@ -35,7 +35,7 @@ export default function CustomerOrderDetails() {
       {
         order && (
           <div>
-            <h1>Detalhe do pedido</h1>
+            <h1>Detalhes do pedido</h1>
             <span data-testid={ `${prefix}element-order-details-label-order-id` }>
               {` Pedido ${order.id}`}
             </span>

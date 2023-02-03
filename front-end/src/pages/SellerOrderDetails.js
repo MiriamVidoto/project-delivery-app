@@ -31,7 +31,7 @@ export default function SellerOrderDetails() {
       <NavBar path={ path } name={ user.name } />
       {order && (
         <div>
-          <h1>Detalhe do pedido</h1>
+          <h1>Detalhes do pedido</h1>
           <div>
             <span data-testid={ `${prefix}element-order-details-label-order-id` }>
               {` Pedido ${order.id}`}
