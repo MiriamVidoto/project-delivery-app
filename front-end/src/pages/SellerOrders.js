@@ -10,7 +10,6 @@ export default function SellerOrders() {
   const LIMIT = 10;
   const path = 'seller';
   const user = getDataFromLocalStorage('user');
-  const [sales, setSales] = useState([]);
 
   useEffect(() => {
     async function getSales() {
