@@ -1,0 +1,14 @@
+.register-inputs {
+  align-items: center;
+  background-color: white;
+  border: 1px solid rgb(178, 135, 135);
+  border-radius: 16px;
+  color: rgb(178, 135, 135);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 100px 40px;
+  width: 400px;
+}

@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postRegister from '../api/register';
+import '../style/register.css';
 import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Register() {
@@ -31,7 +32,7 @@ export default function Register() {
   };
 
   return (
-    <div>
+    <div className="register-inputs">
       <label htmlFor="email">
         Nome
         <input
