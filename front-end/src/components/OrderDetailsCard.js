@@ -3,7 +3,6 @@ import React from 'react';
 
 export default function OrderDetailsCard({ path, products, total }) {
   const prefix = `${path}_order_details__element-order-`;
-  const price = 1;
 
   return (
     <div>
@@ -19,22 +18,23 @@ export default function OrderDetailsCard({ path, products, total }) {
         </thead>
         <tbody>
           {
-            products.map(({ productId, quantity }, i) => (
+            products.length
+            && products.map(({ quantity, products: product }, i) => (
               <tr key={ i }>
                 <th data-testid={ `${prefix}table-item-number-${i}` }>
                   {(i + 1)}
                 </th>
                 <th data-testid={ `${prefix}table-name-${i}` }>
-                  {productId}
+                  {product.name}
                 </th>
                 <th data-testid={ `${prefix}table-quantity-${i}` }>
                   {quantity}
                 </th>
                 <th data-testid={ `${prefix}table-unit-price-${i}` }>
-                  {price}
+                  {product.price}
                 </th>
                 <th data-testid={ `${prefix}table-sub-total-${i}` }>
-                  {(price * quantity).toFixed(2)}
+                  {(product.price * quantity).toFixed(2)}
                 </th>
               </tr>
             ))
@@ -42,7 +42,7 @@ export default function OrderDetailsCard({ path, products, total }) {
         </tbody>
       </table>
       <div data-testid={ `${prefix}total-price` }>
-        {`Total R$ ${total}`}
+        { total.replace(/\./, ',') }
       </div>
     </div>
   );
@@ -50,10 +50,10 @@ export default function OrderDetailsCard({ path, products, total }) {
 
 OrderDetailsCard.propTypes = {
   path: PropTypes.string.isRequired,
-  products: PropTypes.arrayOf(PropTypes.shape({
-    product: PropTypes.string,
-    quantity: PropTypes.number,
-    price: PropTypes.number,
-  })).isRequired,
+  products: PropTypes.shape({
+    length: PropTypes.func,
+    map: PropTypes.func,
+  }).isRequired,
+
   total: PropTypes.string.isRequired,
 };
