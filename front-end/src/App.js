@@ -1,7 +1,6 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home';
 import Login from './pages/Login';
 import Products from './pages/Products';
 import Register from './pages/Register';
@@ -15,7 +14,7 @@ import CustomerOrderDetails from './pages/CustomerOrderDetails';
 function App() {
   return (
     <Switch>
-      <Route exact path="/" component={ Home } />
+      <Route exact path="/" component={ Login } />
       <Route exact path="/login" component={ Login } />
       <Route exact path="/register" component={ Register } />
       <Route exact path="/customer/products" component={ Products } />
