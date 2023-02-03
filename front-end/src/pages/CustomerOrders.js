@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import getCostumerOrders from '../api/costumerOrders';
 import NavBar from '../components/navbar';
