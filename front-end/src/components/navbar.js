@@ -46,7 +46,7 @@ export default function NavBar({ path, name }) {
       <button
         type="button"
         data-testid="customer_products__element-navbar-user-full-name"
-        onClick={ () => history.push('') }
+        onClick={ () => history.push('/login') }
       >
         {name}
       </button>
