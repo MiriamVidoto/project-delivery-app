@@ -1,3 +1,6 @@
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
@@ -25,37 +28,39 @@ export default function SellerOrderDetails() {
   return (
     <div>
       <NavBar path={ path } name={ user.name } />
-      <div>
-        <h1>Detalhe do pedido</h1>
+      {order && (
         <div>
-          <span data-testid={ `${prefix}element-order-details-label-order-id` }>
-            {` Pedido ${order.id}`}
-          </span>
-          <span data-testid={ `${prefix}element-order-details-label-order-date` }>
-            { order.sale_date }
-          </span>
-          <span data-testid={ `${prefix}element-order-details-label-delivery-status` }>
-            { order.status }
-          </span>
-          <button
-            type="button"
-            data-testid={ `${prefix}button-preparing-check` }
-          >
-            Preparar Pedido
-          </button>
-          <button
-            type="button"
-            data-testid={ `${prefix}button-dispatch-check` }
-          >
-            Saiu para entrega
-          </button>
+          <h1>Detalhe do pedido</h1>
+          <div>
+            <span data-testid={ `${prefix}element-order-details-label-order-id` }>
+              {` Pedido ${order.id}`}
+            </span>
+            <span data-testid={ `${prefix}element-order-details-label-order-date` }>
+              { order.sale_date }
+            </span>
+            <span data-testid={ `${prefix}element-order-details-label-delivery-status` }>
+              { order.status }
+            </span>
+            <button
+              type="button"
+              data-testid={ `${prefix}button-preparing-check` }
+            >
+              Preparar Pedido
+            </button>
+            <button
+              type="button"
+              data-testid={ `${prefix}button-dispatch-check` }
+            >
+              Saiu para entrega
+            </button>
+          </div>
+          <OrderDetailsCard
+            path="seller"
+            products={ saleProducts }
+            total={ order.totalPrice }
+          />
         </div>
-      </div>
-      <OrderDetailsCard
-        path="seller"
-        products={ saleProducts }
-        total={ order.totalPrice }
-      />
+      )}
     </div>
   );
 }
