@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
+import '../style/login.css';
 import { setDataToLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
@@ -45,44 +46,50 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <label htmlFor="email">
-        Login
-        <input
-          data-testid="common_login__input-email"
-          name="email"
-          type="email"
-          onChange={ (e) => setEmail(e.target.value) }
-        />
-      </label>
-      <label htmlFor="password">
-        Senha
-        <input
-          data-testid="common_login__input-password"
-          name="password"
-          type="password"
-          onChange={ (e) => setPassword(e.target.value) }
-        />
-      </label>
-      <button
-        data-testid="common_login__button-login"
-        type="button"
-        disabled={ !login() }
-        onClick={ () => validateLogin({ email: userEmail }) }
-      >
-        Login
-      </button>
-      <button
-        data-testid="common_login__button-register"
-        type="button"
-        onClick={ () => register() }
-      >
-        Ainda não tenho conta
-      </button>
+    <section className="section-login">
+      <div className="inputs-login">
+        <form className="form-inputs">
+          <label htmlFor="email">
+            Login
+            <input
+              data-testid="common_login__input-email"
+              name="email"
+              type="email"
+              onChange={ (e) => setEmail(e.target.value) }
+            />
+          </label>
+          <label htmlFor="password">
+            Senha
+            <input
+              data-testid="common_login__input-password"
+              name="password"
+              type="password"
+              onChange={ (e) => setPassword(e.target.value) }
+            />
+          </label>
+        </form>
+      </div>
+      <div className="buttons-login">
+        <button
+          data-testid="common_login__button-login"
+          type="button"
+          disabled={ !login() }
+          onClick={ () => validateLogin({ email: userEmail }) }
+        >
+          Login
+        </button>
+        <button
+          data-testid="common_login__button-register"
+          type="button"
+          onClick={ () => register() }
+        >
+          Ainda não tenho conta
+        </button>
+      </div>
       {invalid && (
         <div data-testid="common_login__element-invalid-email">
           email invalido
         </div>)}
-    </div>
+    </section>
   );
 }
