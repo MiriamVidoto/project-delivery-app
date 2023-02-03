@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
@@ -8,6 +9,7 @@ import { getDataFromLocalStorage } from '../utils/localStorage';
 export default function CustomerOrderDetails() {
   const [order, setOrder] = useState();
   const [saleProducts, setSaleProducts] = useState();
+  const [disable, setDisable] = useState(true);
 
   const { id } = useParams();
   const user = getDataFromLocalStorage('user');
@@ -19,6 +21,7 @@ export default function CustomerOrderDetails() {
     const { products } = orderData;
     setSaleProducts(products);
     setOrder(orderData);
+    if (orderData.status === 'Em Trânsito') setDisable(false);
   };
 
   useEffect(() => {
@@ -40,7 +43,7 @@ export default function CustomerOrderDetails() {
               { `P Vend: ${order.sellerName}`}
             </span>
             <span data-testid={ `${prefix}element-order-details-label-order-date` }>
-              { order.sale_date }
+              { moment(order.saleDate).locale('pt-br').format('DD/MM/YYYY')}
             </span>
             <span data-testid={ `${prefix}element-order-details-label-delivery-status` }>
               { order.status }
@@ -48,12 +51,13 @@ export default function CustomerOrderDetails() {
             <button
               type="button"
               data-testid={ `${prefix}button-delivery-check` }
+              disabled={ disable }
             >
               MARCAR COMO ENTREGUE
             </button>
             <OrderDetailsCard
               path="customer"
-              products={ saleProducts }
+              productsData={ saleProducts }
               total={ order.totalPrice }
             />
           </div>

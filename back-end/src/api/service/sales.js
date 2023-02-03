@@ -49,10 +49,18 @@ const orderDetails = async (id) => {
   const sellerName = name;
 
   const products = await SaleProducts.findAll(
-    { where: { saleId: sale.id }, include: [{ model: Products, as: 'products' }], raw: true },
+    { where: { saleId: sale.id }, include: [{ model: Products, as: 'products' }] },
   );
   return { status: 200, message: { ...sale, sellerName, products } };
 };
+
+  // const orderDetails = async (id) => {
+  //   const saleDetails = await SaleProducts.findAll({
+  //     where: { saleId: id },
+  //     include: [{ model: Products, as: 'products' }],
+  //   })
+  //   return { status: 200, message: saleDetails};
+  // }
 
 module.exports = {
     checkoutSale,

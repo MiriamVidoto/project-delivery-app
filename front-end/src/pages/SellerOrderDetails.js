@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
@@ -36,7 +37,7 @@ export default function SellerOrderDetails() {
               {` Pedido ${order.id}`}
             </span>
             <span data-testid={ `${prefix}element-order-details-label-order-date` }>
-              { order.sale_date }
+              { moment(order.saleDate).locale('pt-br').format('DD/MM/YYYY') }
             </span>
             <span data-testid={ `${prefix}element-order-details-label-delivery-status` }>
               { order.status }
@@ -50,13 +51,14 @@ export default function SellerOrderDetails() {
             <button
               type="button"
               data-testid={ `${prefix}button-dispatch-check` }
+              disabled
             >
               Saiu para entrega
             </button>
           </div>
           <OrderDetailsCard
             path="seller"
-            products={ saleProducts }
+            productsData={ saleProducts }
             total={ order.totalPrice }
           />
         </div>

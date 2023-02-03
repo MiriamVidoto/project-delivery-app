@@ -15,7 +15,7 @@ export default function OrderCard({ order, path }) {
         {status}
       </span>
       <span data-testid={ `${path}_orders__element-order-date-${id}` }>
-        {moment(saleDate).locale('pt-br').format('L')}
+        {moment(saleDate).locale('pt-br').format('DD/MM/YYYY')}
       </span>
       <span data-testid={ `${path}_orders__element-card-price-${id}` }>
         {totalPrice.replace(/\./, ',')}
