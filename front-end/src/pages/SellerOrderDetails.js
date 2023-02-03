@@ -58,7 +58,7 @@ export default function SellerOrderDetails() {
           </div>
           <OrderDetailsCard
             path="seller"
-            products={ saleProducts }
+            productsData={ saleProducts }
             total={ order.totalPrice }
           />
         </div>

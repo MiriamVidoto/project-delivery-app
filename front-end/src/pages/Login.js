@@ -1,8 +1,8 @@
 import { validate } from 'email-validator';
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
-import { getDataFromLocalStorage, setDataToLocalStorage } from '../utils/localStorage';
+import { setDataToLocalStorage, getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function Login() {
   const [userEmail, setEmail] = useState('');
@@ -10,11 +10,6 @@ export default function Login() {
   const [invalid, setInvalid] = useState(false);
 
   const history = useHistory();
-
-  const login = () => {
-    const numberSix = 6;
-    return validate(userEmail) && password.length >= numberSix;
-  };
 
   const redirect = (role) => {
     if (role === 'customer') {
@@ -26,6 +21,20 @@ export default function Login() {
     if (role === 'administrator') {
       history.push('/admin/manage');
     }
+  };
+
+  const redirectToRoute = () => {
+    const user = getDataFromLocalStorage('user');
+    if (user) redirect(user.role);
+  };
+
+  useEffect(() => {
+    redirectToRoute();
+  });
+
+  const login = () => {
+    const numberSix = 6;
+    return validate(userEmail) && password.length >= numberSix;
   };
 
   // const redirect2 = (role) => {
@@ -40,13 +49,13 @@ export default function Login() {
   //   }
   // };
 
-  useEffect(() => {
-    const user = getDataFromLocalStorage('user');
-    if (user) {
-      const { role } = user;
-      redirect(role);
-    }
-  }, []);
+  //   useEffect(() => {
+  //     const user = getDataFromLocalStorage('user');
+  //     if (user) {
+  //       const { role } = user;
+  //       redirect(role);
+  //     }
+  //   }, []);
 
   const validateLogin = async (newPost) => {
     const sucess = 200;

@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export default function OrderDetailsCard({ path, products, total }) {
+export default function OrderDetailsCard({ path, productsData, total }) {
   const prefix = `${path}_order_details__element-order-`;
 
   return (
@@ -18,23 +18,22 @@ export default function OrderDetailsCard({ path, products, total }) {
         </thead>
         <tbody>
           {
-            products.length
-            && products.map(({ quantity, products: product }, i) => (
+            productsData.map(({ quantity, products }, i) => (
               <tr key={ i }>
                 <th data-testid={ `${prefix}table-item-number-${i}` }>
                   {(i + 1)}
                 </th>
                 <th data-testid={ `${prefix}table-name-${i}` }>
-                  {product.name}
+                  {products.name}
                 </th>
                 <th data-testid={ `${prefix}table-quantity-${i}` }>
                   {quantity}
                 </th>
                 <th data-testid={ `${prefix}table-unit-price-${i}` }>
-                  {product.price}
+                  {products.price}
                 </th>
                 <th data-testid={ `${prefix}table-sub-total-${i}` }>
-                  {(product.price * quantity).toFixed(2)}
+                  {(products.price * quantity).toFixed(2)}
                 </th>
               </tr>
             ))
@@ -50,10 +49,11 @@ export default function OrderDetailsCard({ path, products, total }) {
 
 OrderDetailsCard.propTypes = {
   path: PropTypes.string.isRequired,
-  products: PropTypes.shape({
-    length: PropTypes.func,
-    map: PropTypes.func,
-  }).isRequired,
+  productsData: PropTypes.arrayOf(PropTypes.shape({
+    product: PropTypes.string,
+    quantity: PropTypes.number,
+    price: PropTypes.number,
+  })).isRequired,
 
   total: PropTypes.string.isRequired,
 };

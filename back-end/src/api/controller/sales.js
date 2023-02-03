@@ -12,7 +12,7 @@ const ordersSeller = async (req, res) => {
 };
 
 const ordersCustomer = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   const result = await service.ordersCustomer(id);
   return res.status(result.status).json(result.message);
 };
