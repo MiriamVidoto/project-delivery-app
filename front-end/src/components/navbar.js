@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { useHistory, Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import '../style/navBar.css';
 
 export default function NavBar({ path, name }) {
   const history = useHistory();
@@ -11,13 +12,14 @@ export default function NavBar({ path, name }) {
   };
 
   return (
-    <header>
+    <header className="header-navBar">
       { path === 'customer' && (
         <>
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-products"
             onClick={ () => history.push('/products') }
+            className="button-navBar"
           >
             Produtos
           </button>
@@ -25,6 +27,7 @@ export default function NavBar({ path, name }) {
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
             onClick={ () => history.push('') }
+            className="button-navBar"
           >
             Meus pedidos
           </button>
@@ -47,6 +50,7 @@ export default function NavBar({ path, name }) {
         type="button"
         data-testid="customer_products__element-navbar-user-full-name"
         onClick={ () => history.push('') }
+        className="button-navBar"
       >
         {name}
       </button>
@@ -55,6 +59,7 @@ export default function NavBar({ path, name }) {
         type="button"
         data-testid="customer_products__element-navbar-link-logout"
         onClick={ () => logout() }
+        className="button-navBar"
       >
         Sair
       </button>

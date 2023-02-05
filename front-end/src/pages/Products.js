@@ -10,7 +10,7 @@ function Products() {
   }, []);
 
   return (
-    <div>
+    <div className="product-page">
       <NavBar path="customer" name={ user.name } />
       <div>
         <h1>Products Page</h1>

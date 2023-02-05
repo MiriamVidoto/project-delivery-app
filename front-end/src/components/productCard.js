@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import getCostumerProducts from '../api/costumerProducts';
-import { setData, getData } from '../helpers/localStorage';
+import { getData, setData } from '../helpers/localStorage';
+import '../style/products.css';
 
 function ProductCard() {
   const [quantities, setQuantities] = useState([]);
@@ -74,26 +75,10 @@ function ProductCard() {
   };
 
   return (
-    <div>
+    <div className="component-product">
       {totalPrices.length > 0
         && products?.map((product, index) => (
-          <div key={ product.id }>
-            <p data-testid={ `customer_products__element-card-price-${product.id}` }>
-              Preço:
-              {' '}
-              {(product.price).replace(/\./, ',')}
-              {' '}
-            </p>
-            <p>
-              {' '}
-              Sub-total:
-              {' '}
-              {quantities[index] === 0
-                ? '0,00'
-                : (product.price * quantities[index])
-                  .toFixed(2)
-                  .replace(/\./, ',')}
-            </p>
+          <div key={ product.id } className="card-product">
             <img
               className="image"
               src={ product.urlImage }
@@ -103,48 +88,72 @@ function ProductCard() {
 
             <h2
               data-testid={ `customer_products__element-card-title-${product.id}` }
+              className="title-product"
             >
               {product.name}
             </h2>
-
-            <button
-              type="button"
-              data-testid={ `customer_products__button-card-rm-item-${product.id}` }
-              onClick={ () => {
-                const newQuantities = [...quantities];
-                newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
-                /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
-                setQuantities(newQuantities);
-                handleClickProducts(product, newQuantities, index);
-              } }
-              disabled={ quantities[index] === 0 }
+            <p
+              data-testid={ `customer_products__element-card-price-${product.id}` }
+              className="values"
             >
-              -
-            </button>
+              Preço:
+              {' '}
+              {(product.price).replace(/\./, ',')}
+              {' '}
+            </p>
+            <p className="values">
+              {' '}
+              Sub-total:
+              {' '}
+              {quantities[index] === 0
+                ? '0,00'
+                : (product.price * quantities[index])
+                  .toFixed(2)
+                  .replace(/\./, ',')}
+            </p>
+            <div>
+              <button
+                type="button"
+                data-testid={ `customer_products__button-card-rm-item-${product.id}` }
+                onClick={ () => {
+                  const newQuantities = [...quantities];
+                  newQuantities[index] = Math.max(newQuantities[index] - 1, 0);
+                  /* impede que o numero fique negativo, definindo o máximo/mínimo como 0 */
+                  setQuantities(newQuantities);
+                  handleClickProducts(product, newQuantities, index);
+                } }
+                disabled={ quantities[index] === 0 }
+                className="button-products"
+              >
+                -
+              </button>
 
-            <input
-              data-testid={ `customer_products__input-card-quantity-${product.id}` }
-              value={ quantities[index] }
-              onChange={ (e) => {
-                const newQuantities = [...quantities];
-                // o Number() é necessário pq o input chega como string e dá problema na soma
-                newQuantities[index] = Number(e.target.value);
-                setQuantities(newQuantities);
-              } }
-            />
+              <input
+                data-testid={ `customer_products__input-card-quantity-${product.id}` }
+                value={ quantities[index] }
+                onChange={ (e) => {
+                  const newQuantities = [...quantities];
+                  // o Number() é necessário pq o input chega como string e dá problema na soma
+                  newQuantities[index] = Number(e.target.value);
+                  setQuantities(newQuantities);
+                } }
+                className="input-quantity"
+              />
 
-            <button
-              type="button"
-              data-testid={ `customer_products__button-card-add-item-${product.id}` }
-              onClick={ () => {
-                const newQuantities = [...quantities];
-                newQuantities[index] += 1;
-                setQuantities(newQuantities);
-                handleClickProducts(product, newQuantities, index);
-              } }
-            >
-              +
-            </button>
+              <button
+                type="button"
+                data-testid={ `customer_products__button-card-add-item-${product.id}` }
+                onClick={ () => {
+                  const newQuantities = [...quantities];
+                  newQuantities[index] += 1;
+                  setQuantities(newQuantities);
+                  handleClickProducts(product, newQuantities, index);
+                } }
+                className="button-products"
+              >
+                +
+              </button>
+            </div>
           </div>
         ))}
       <button
