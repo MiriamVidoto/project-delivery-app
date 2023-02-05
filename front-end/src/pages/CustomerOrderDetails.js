@@ -5,12 +5,13 @@ import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
+import updateStatus from '../api/updateSale';
 
 export default function CustomerOrderDetails() {
   const [order, setOrder] = useState();
-
   const [saleProducts, setSaleProducts] = useState();
   const [disable, setDisable] = useState(true);
+  const [reload, setReload] = useState(true);
 
   const { id } = useParams();
   const user = getDataFromLocalStorage('user');
@@ -23,11 +24,17 @@ export default function CustomerOrderDetails() {
     setSaleProducts(products);
     setOrder(orderData);
     if (orderData.status === 'Em Trânsito') setDisable(false);
+    else setDisable(true);
   };
 
   useEffect(() => {
     getDatas();
-  }, []);
+  }, [reload]);
+
+  const handleClick = (status) => {
+    updateStatus({ id: order.id, status });
+    setReload(!reload);
+  };
 
   return (
     <div>
@@ -36,7 +43,7 @@ export default function CustomerOrderDetails() {
       {
         order && (
           <div>
-            <h1>Detalhes do pedido</h1>
+            <h1> Detalhes do pedido </h1>
             <span data-testid={ `${prefix}element-order-details-label-order-id` }>
               {` Pedido ${order.id}`}
             </span>
@@ -53,6 +60,7 @@ export default function CustomerOrderDetails() {
               type="button"
               data-testid={ `${prefix}button-delivery-check` }
               disabled={ disable }
+              onClick={ () => handleClick('Entregue') }
             >
               MARCAR COMO ENTREGUE
             </button>

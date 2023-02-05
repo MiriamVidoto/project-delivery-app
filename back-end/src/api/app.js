@@ -21,6 +21,7 @@ app.get('/sales/seller/:id', controllerSales.ordersSeller);
 app.get('/sales/customer/:id', controllerSales.ordersCustomer);
 app.get('/sales/details/:id', controllerSales.orderDetails);
 app.post('/sales', controllerSales.checkoutSale);
+app.put('/sales', controllerSales.updateStatusSale);
 app.get('/product/details/:id', controllerProduct.productsDetails);
 
 module.exports = app;

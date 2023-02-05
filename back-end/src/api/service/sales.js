@@ -54,17 +54,20 @@ const orderDetails = async (id) => {
   return { status: 200, message: { ...sale, sellerName, products } };
 };
 
-  // const orderDetails = async (id) => {
-  //   const saleDetails = await SaleProducts.findAll({
-  //     where: { saleId: id },
-  //     include: [{ model: Products, as: 'products' }],
-  //   })
-  //   return { status: 200, message: saleDetails};
-  // }
+const updateStatusSale = async (sale) => {
+  const { id, status } = sale;
+  const newSale = await Sale.update(
+    { status },
+    { where: { id } },
+  );
+  if (newSale) return { status: 201, message: newSale };
+  return { status: 404, message: 'Failed' };
+};
 
 module.exports = {
     checkoutSale,
     ordersSeller,
     ordersCustomer,
     orderDetails,
+    updateStatusSale,
 };
