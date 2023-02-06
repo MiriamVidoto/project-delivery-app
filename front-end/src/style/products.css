@@ -25,6 +25,11 @@ h1 {
   width: 100px;
 }
 
+.button-carrinho {
+  font-size: medium;
+  margin-top: 20px;
+}
+
 .product-page {
   align-items: center;
   display: flex;

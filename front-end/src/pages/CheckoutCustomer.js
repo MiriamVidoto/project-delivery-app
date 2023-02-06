@@ -67,10 +67,12 @@ export default function CheckoutCustomer() {
       <NavBar path="customer" name={ user.name } />
       <h1>Checkout Customer</h1>
 
+      <h3> Detalhes e Endereço para Entrega</h3>
       <div className="form-customer-checkout">
-        <h3> Detalhes e Endereço para Entrega</h3>
 
         <label htmlFor="select">
+          {' '}
+          Vendedor
           <select
             id="select"
             name="select"
@@ -115,17 +117,16 @@ export default function CheckoutCustomer() {
             onChange={ (e) => setNumber(e.target.value) }
           />
         </label>
-
-        <h4>Finalizar Pedido</h4>
-        <CheckoutCard />
-        <button
-          type="button"
-          data-testid="customer_checkout__button-submit-order"
-          onClick={ handleClick }
-        >
-          Finalizar pedido
-        </button>
       </div>
+      <h4>Finalizar Pedido</h4>
+      <CheckoutCard />
+      <button
+        type="button"
+        data-testid="customer_checkout__button-submit-order"
+        onClick={ handleClick }
+      >
+        Finalizar pedido
+      </button>
 
     </div>
   );

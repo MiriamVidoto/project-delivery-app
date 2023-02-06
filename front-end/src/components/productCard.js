@@ -163,6 +163,7 @@ function ProductCard() {
           handleClickShoppingCart();
         } }
         disabled={ shoppingCartTotal === 0 }
+        className="button-carrinho"
       >
         Ver Carrinho: R$
         <div data-testid="customer_products__checkout-bottom-value">

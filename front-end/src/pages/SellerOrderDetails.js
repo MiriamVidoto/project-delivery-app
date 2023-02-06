@@ -1,5 +1,6 @@
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
+import '../style/sellerOrderDetails.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function SellerOrderDetails() {
@@ -23,7 +24,7 @@ export default function SellerOrderDetails() {
   const prefix = 'seller_order_details__';
 
   return (
-    <div>
+    <div className="page-seller-order-details">
       <NavBar path={ path } name={ user.name } />
       <div>
         <h1>Detalhe do pedido</h1>

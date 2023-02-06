@@ -108,6 +108,7 @@ export default function CheckoutCard() {
       </table>
       <h3
         data-testid="customer_checkout__element-order-total-price"
+        className="price"
       >
         {
           `Total: ${totalPrice}`

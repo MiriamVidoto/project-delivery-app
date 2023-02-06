@@ -33,6 +33,7 @@ export default function Register() {
 
   return (
     <div className="register-inputs">
+      <h1>Cadastre-se</h1>
       <label htmlFor="email">
         Nome
         <input

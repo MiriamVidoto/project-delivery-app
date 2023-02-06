@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import '../style/sellerOrderDetails.css';
 
 export default function OrderDetailsCard({ products, total }) {
   const prefix = 'seller_order_details__element-order-';
 
   return (
-    <div>
+    <div className="component-order-details">
       <table>
         <thead>
           <tr>
@@ -40,8 +41,11 @@ export default function OrderDetailsCard({ products, total }) {
           }
         </tbody>
       </table>
-      <div data-testid={ `${prefix}total-price` }>
-        {`Total R$ ${total}`}
+      <div
+        data-testid={ `${prefix}total-price` }
+        className="total-price"
+      >
+        {`Total: R$ ${total}`}
       </div>
     </div>
   );

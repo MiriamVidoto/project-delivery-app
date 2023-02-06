@@ -24,12 +24,14 @@ export default function CustomerOrderDetails() {
   const prefix = 'customer_order_details__';
 
   return (
-    <div>
-      <h1>details</h1>
-      <NavBar path={ path } name={ user.name } />
-      <div>
+    <div className="page-order-details">
+      <div className="customer-order-details">
+        <h1>Details</h1>
+        <NavBar path={ path } name={ user.name } />
+      </div>
+      <div className="customer-details-topo">
         <h1>Detalhe do pedido</h1>
-        <div>
+        <div className="details-order">
           <span data-testid={ `${prefix}element-order-details-label-order-${order.id}` }>
             {` Pedido ${order.id}`}
           </span>
@@ -42,6 +44,7 @@ export default function CustomerOrderDetails() {
           <button
             type="button"
             data-testid={ `${prefix}button-delivery-check` }
+            className="button-entregue"
           >
             MARCAR COMO ENTREGUE
           </button>

@@ -6,17 +6,27 @@
   width: 100%;
 }
 
+.price {
+  align-self: center;
+  color: rgb(177, 81, 81);
+  font-size: x-large;
+}
+
 .form-customer-checkout {
   align-items: center;
   display: flex;
-  flex-direction: column;
+
+  /* flex-direction: column; */
+  gap: 5px;
+  width: 99%;
 }
 
 .checkout-card {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-direction: column;
   gap: 15px;
+  width: 99%;
 }
 
 th, td {

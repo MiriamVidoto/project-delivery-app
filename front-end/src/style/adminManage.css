@@ -36,4 +36,5 @@ select {
   border: 1px solid rgb(178, 135, 135);
   border-radius: 4px;
   color: rgb(178, 135, 135);
+  height: 54px;
 }

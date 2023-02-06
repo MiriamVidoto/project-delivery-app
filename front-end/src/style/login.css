@@ -48,8 +48,8 @@ button:disabled {
   justify-content: center;
   justify-self: center;
   margin: 0 auto;
-  padding: 100px 40px;
-  width: 400px;
+  padding: 70px 40px;
+  width: 600px;
 }
 
 .buttons-login {
@@ -74,4 +74,9 @@ button:disabled {
   flex-direction: column;
   gap: 20px;
   width: 100%;
+}
+
+img {
+  align-self: center;
+  width: 200px;
 }

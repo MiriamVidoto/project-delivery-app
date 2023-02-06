@@ -49,7 +49,7 @@ export default function NavBar({ path, name }) {
               data-testid="customer_products__element-navbar-link-orders"
               className="tittle-admin"
             >
-              GERENCIAR USUÁRIOS
+              <h1> GERENCIAR USUÁRIOS </h1>
             </span>
           )}
           <div className="buttons-nav-bar">

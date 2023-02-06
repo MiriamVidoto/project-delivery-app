@@ -2,6 +2,7 @@ import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import postLogin from '../api/login';
+import logo from '../images/Delivery.png';
 import '../style/login.css';
 import { setDataToLocalStorage } from '../utils/localStorage';
 
@@ -48,6 +49,7 @@ export default function Login() {
   return (
     <section className="section-login">
       <div className="inputs-login">
+        <img src={ logo } alt="logo" />
         <form className="form-inputs">
           <label htmlFor="email">
             Login
