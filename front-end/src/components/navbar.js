@@ -41,28 +41,35 @@ export default function NavBar({ path, name }) {
           PEDIDOS
         </Link>
       )}
-      { path === 'admin' && (
-        <span data-testid="customer_products__element-navbar-link-orders">
-          GERENCIAR USUÁRIOS
-        </span>
-      )}
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-user-full-name"
-        onClick={ () => history.push('') }
-        className="button-navBar"
-      >
-        {name}
-      </button>
+      <div className="header-nav-bar-admin">
+        { path === 'admin' && (
+          <span
+            data-testid="customer_products__element-navbar-link-orders"
+            className="tittle-admin"
+          >
+            GERENCIAR USUÁRIOS
+          </span>
+        )}
+        <div className="buttons-nav-bar">
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-user-full-name"
+            onClick={ () => history.push('') }
+            className="button-navBar"
+          >
+            {name}
+          </button>
 
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => logout() }
-        className="button-navBar"
-      >
-        Sair
-      </button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => logout() }
+            className="button-navBar"
+          >
+            Sair
+          </button>
+        </div>
+      </div>
     </header>
   );
 }
