@@ -1,5 +1,6 @@
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
+import '../style/sellerOrders.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function SellerOrders() {
@@ -21,10 +22,10 @@ export default function SellerOrders() {
   const user = getDataFromLocalStorage('user');
 
   return (
-    <div>
+    <div className="page-seller-orders">
       <NavBar path={ path } name={ user.name } />
       <div className="orderCards">
-        Pedidos
+        {/* <h3>Pedidos</h3> */}
         {
           sales.slice(0, LIMIT)
             .map((e) => <OrderCard order={ e } path={ path } key={ e.id } />)

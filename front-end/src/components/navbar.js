@@ -32,42 +32,45 @@ export default function NavBar({ path, name }) {
             Meus pedidos
           </button>
         </>
-      ) }
-      { path === 'seller' && (
-        <Link
-          to="/seller/orders"
-          data-testid="customer_products__element-navbar-link-orders"
-        >
-          PEDIDOS
-        </Link>
       )}
-      <div className="header-nav-bar-admin">
-        { path === 'admin' && (
-          <span
+      <div className="header-seller-orders">
+        { path === 'seller' && (
+          <Link
+            to="/seller/orders"
             data-testid="customer_products__element-navbar-link-orders"
-            className="tittle-admin"
           >
-            GERENCIAR USUÁRIOS
-          </span>
+            <h1>  PEDIDOS </h1>
+          </Link>
         )}
-        <div className="buttons-nav-bar">
-          <button
-            type="button"
-            data-testid="customer_products__element-navbar-user-full-name"
-            onClick={ () => history.push('') }
-            className="button-navBar"
-          >
-            {name}
-          </button>
 
-          <button
-            type="button"
-            data-testid="customer_products__element-navbar-link-logout"
-            onClick={ () => logout() }
-            className="button-navBar"
-          >
-            Sair
-          </button>
+        <div className="header-nav-bar-admin">
+          { path === 'admin' && (
+            <span
+              data-testid="customer_products__element-navbar-link-orders"
+              className="tittle-admin"
+            >
+              GERENCIAR USUÁRIOS
+            </span>
+          )}
+          <div className="buttons-nav-bar">
+            <button
+              type="button"
+              data-testid="customer_products__element-navbar-user-full-name"
+              onClick={ () => history.push('') }
+              className="button-navBar"
+            >
+              {name}
+            </button>
+
+            <button
+              type="button"
+              data-testid="customer_products__element-navbar-link-logout"
+              onClick={ () => logout() }
+              className="button-navBar"
+            >
+              Sair
+            </button>
+          </div>
         </div>
       </div>
     </header>

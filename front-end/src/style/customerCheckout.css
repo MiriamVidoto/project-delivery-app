@@ -1,0 +1,27 @@
+.page-customer-checkout {
+  align-items: center;
+  color: rgb(178, 135, 135);
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-customer-checkout {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.checkout-card {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+th, td {
+  overflow: hidden;
+  padding: 10px 20px;
+  text-align: center;
+  text-overflow: ellipsis;
+}

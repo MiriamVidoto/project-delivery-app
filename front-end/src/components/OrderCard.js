@@ -8,15 +8,19 @@ export default function OrderCard({ order, path }) {
       <span data-testid={ `${path}_orders__element-order-id-${order.id}` }>
         {`Pedido ${order.id}`}
       </span>
+      <br />
       <span data-testid={ `${path}_orders__element-delivery-status-${order.id}` }>
         {order.status}
       </span>
+      <br />
       <span data-testid={ `${path}_orders__element-order-date-${order.id}` }>
         {`${order.saleDate}`}
       </span>
+      <br />
       <span data-testid={ `${path}_orders__element-card-price-${order.id}` }>
         {`R$ ${order.totalPrice}`}
       </span>
+      <br />
       {
         path === 'seller' && (
           <span data-testid={ `${path}_orders__element-card-address-${order.id}` }>
