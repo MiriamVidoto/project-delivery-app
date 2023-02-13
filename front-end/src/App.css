@@ -1,3 +1,5 @@
+/* stylelint-disable selector-max-specificity */
+
 /* .App {
   align-items: center;
   background: #0fa36b;
@@ -52,3 +54,10 @@
     transform: rotate(-10deg);
   }
 } */
+
+html, body, #root {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+

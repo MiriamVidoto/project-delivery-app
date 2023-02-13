@@ -1,0 +1,62 @@
+.page-order-details {
+  align-items: stretch;
+  color: rgb(178, 135, 135);
+  display: flex;
+  flex-direction: column;
+  gap: 45px;
+  width: 100%;
+}
+
+th, td {
+  border: 1px solid rgb(178, 135, 135);
+  overflow: hidden;
+  padding: 10px 20px;
+  text-align: center;
+  text-overflow: ellipsis;
+}
+
+span {
+  font-size: larger;
+}
+
+.component-order-details {
+  align-items: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+thead {
+  color: rgb(177, 81, 81);
+  font-size: large;
+}
+
+.total-price {
+  align-self: self-end;
+  color: rgb(177, 81, 81);
+  font-size: x-large;
+  margin-right: 95px;
+  margin-top: 20px;
+}
+
+.customer-order-details {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.customer-details-topo {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.details-order {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}

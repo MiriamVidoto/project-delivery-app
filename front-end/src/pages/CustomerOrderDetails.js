@@ -20,6 +20,7 @@ export default function CustomerOrderDetails() {
 
   const getDatas = async () => {
     const orderData = await getOrderDetails(id);
+    console.log(orderData);
     const { products } = orderData;
     setSaleProducts(products);
     setOrder(orderData);
@@ -37,41 +38,48 @@ export default function CustomerOrderDetails() {
   };
 
   return (
-    <div>
-      <h1>details</h1>
-      <NavBar path={ path } name={ user.name } />
-      {
-        order && (
-          <div>
-            <h1> Detalhes do pedido </h1>
-            <span data-testid={ `${prefix}element-order-details-label-order-id` }>
-              {` Pedido ${order.id}`}
-            </span>
-            <span data-testid={ `${prefix}element-order-details-label-seller-name` }>
-              { `P Vend: ${order.sellerName}`}
-            </span>
-            <span data-testid={ `${prefix}element-order-details-label-order-date` }>
-              { moment(order.saleDate).locale('pt-br').format('DD/MM/YYYY')}
-            </span>
-            <span data-testid={ `${prefix}element-order-details-label-delivery-status` }>
-              { order.status }
-            </span>
-            <button
-              type="button"
-              data-testid={ `${prefix}button-delivery-check` }
-              disabled={ disable }
-              onClick={ () => handleClick('Entregue') }
-            >
-              MARCAR COMO ENTREGUE
-            </button>
-            <OrderDetailsCard
-              path="customer"
-              productsData={ saleProducts }
-              total={ order.totalPrice }
-            />
+    <div className="page-order-details">
+      <div className="customer-order-details">
+        <h1>Details</h1>
+        <NavBar path={ path } name={ user.name } />
+      </div>
+      { order && (
+        <>
+          <div className="customer-details-topo">
+            <h1>Detalhe do pedido</h1>
+            <div className="details-order">
+              <span
+                data-testid={ `${prefix}element-order-details-label-order-${order.id}` }
+              >
+                {` Pedido ${order.id}`}
+              </span>
+              <span data-testid={ `${prefix}element-order-details-label-order-date` }>
+                { moment(order.saleDate).locale('pt-br').format('DD/MM/YYYY')}
+              </span>
+              <span
+                data-testid={ `${prefix}element-order-details-label-delivery-status` }
+              >
+                { order.status }
+              </span>
+              <button
+                type="button"
+                data-testid={ `${prefix}button-delivery-check` }
+                className="button-entregue"
+                disabled={ disable }
+                onClick={ () => handleClick('Entregue') }
+              >
+                MARCAR COMO ENTREGUE
+              </button>
+            </div>
           </div>
-        )
-      }
+          <OrderDetailsCard
+            order={ order }
+            path="customer"
+            productsData={ saleProducts }
+            total={ order.totalPrice }
+          />
+        </>
+      )}
     </div>
   );
 }

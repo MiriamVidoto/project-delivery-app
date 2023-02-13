@@ -11,12 +11,13 @@ export default function NavBar({ path, name }) {
   };
 
   return (
-    <header>
+    <header className="header-navBar">
       { path === 'customer' && (
         <>
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-products"
+            className="button-navBar"
             onClick={ () => history.push('/customer/products') }
           >
             Produtos
@@ -24,6 +25,7 @@ export default function NavBar({ path, name }) {
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
+            className="button-navBar"
             onClick={ () => history.push('/customer/orders') }
           >
             Meus pedidos
@@ -44,21 +46,34 @@ export default function NavBar({ path, name }) {
           GERENCIAR USUÁRIOS
         </span>
       )}
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-user-full-name"
-        onClick={ () => history.push('/login') }
-      >
-        {name}
-      </button>
-
-      <button
-        type="button"
-        data-testid="customer_products__element-navbar-link-logout"
-        onClick={ () => logout() }
-      >
-        Sair
-      </button>
+      <div className="header-nav-bar-admin">
+        { path === 'admin' && (
+          <span
+            data-testid="customer_products__element-navbar-link-orders"
+            className="tittle-admin"
+          >
+            <h1>GERENCIAR USUÁRIOS</h1>
+          </span>
+        )}
+        <div className="buttons-nav-bar">
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-user-full-name"
+            onClick={ () => history.push('') }
+            className="button-navBar"
+          >
+            {name}
+          </button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => logout() }
+            className="button-navBar"
+          >
+            Sair
+          </button>
+        </div>
+      </div>
     </header>
   );
 }

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import '../style/customerCheckout.css';
 import { getDataFromLocalStorage, setDataToLocalStorage } from '../utils/localStorage';
 
 export default function CheckoutCard() {
@@ -39,7 +40,7 @@ export default function CheckoutCard() {
   };
 
   return (
-    <div>
+    <div className="checkout-card">
       <table id="table">
         <thead>
           <th>Item</th>
@@ -107,9 +108,10 @@ export default function CheckoutCard() {
       </table>
       <h3
         data-testid="customer_checkout__element-order-total-price"
+        className="price"
       >
         {
-          `${totalPrice}`
+          `Total: ${totalPrice}`
         }
       </h3>
     </div>

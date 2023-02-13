@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import NavBar from '../components/navbar';
-import { getDataFromLocalStorage } from '../utils/localStorage';
-import getSellers from '../api/sellers';
 import postSales from '../api/sales';
+import getSellers from '../api/sellers';
 import CheckoutCard from '../components/CheckoutCard';
+import NavBar from '../components/navbar';
+import '../style/customerCheckout.css';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function CheckoutCustomer() {
   const [user, setUser] = useState({ name: '' });
@@ -62,14 +63,16 @@ export default function CheckoutCustomer() {
   }, []);
 
   return (
-    <div>
+    <div className="page-customer-checkout">
       <NavBar path="customer" name={ user.name } />
       <h1>Checkout Customer</h1>
 
-      <div>
-        <h3> Detalhes e Endereço para Entrega</h3>
+      <h3> Detalhes e Endereço para Entrega</h3>
+      <div className="form-customer-checkout">
 
         <label htmlFor="select">
+          {' '}
+          Vendedor
           <select
             id="select"
             name="select"
@@ -114,11 +117,9 @@ export default function CheckoutCustomer() {
             onChange={ (e) => setNumber(e.target.value) }
           />
         </label>
-
-        <h4>Finalizar Pedido</h4>
-        <CheckoutCard />
       </div>
-
+      <h4>Finalizar Pedido</h4>
+      <CheckoutCard />
       <button
         type="button"
         data-testid="customer_checkout__button-submit-order"

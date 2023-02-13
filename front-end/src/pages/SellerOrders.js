@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import getSellerOrders from '../api/sellerOrders';
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
+import '../style/sellerOrders.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function SellerOrders() {
@@ -29,7 +30,7 @@ export default function SellerOrders() {
   }, []);
 
   return (
-    <div>
+    <div className="page-seller-orders">
       <NavBar path={ path } name={ user.name } />
       { sales && (
         <div className="orderCards">

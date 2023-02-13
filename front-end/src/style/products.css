@@ -1,0 +1,57 @@
+h1 {
+  color: rgb(243, 33, 33);
+}
+
+.image {
+  height: 200px;
+  object-fit: contain;
+  width: 200px;
+}
+
+.title-product {
+  font-size: large;
+}
+
+.values {
+  font-weight: 600;
+}
+
+.input-quantity {
+  height: 30px;
+  width: 75px;
+}
+
+.button-products {
+  width: 100px;
+}
+
+.button-carrinho {
+  font-size: medium;
+  margin-top: 20px;
+}
+
+.product-page {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.component-product {
+  align-items: center;
+  color: rgb(178, 135, 135);
+  display: flex;
+  flex-wrap: wrap;
+
+  /* flex-direction: column; */
+  justify-content: space-around;
+  justify-self: center;
+  width: 100%;
+}
+
+.card-product {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

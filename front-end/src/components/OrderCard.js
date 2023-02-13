@@ -20,6 +20,7 @@ export default function OrderCard({ order, path }) {
       <span data-testid={ `${path}_orders__element-card-price-${id}` }>
         {totalPrice.replace(/\./, ',')}
       </span>
+      <br />
       {
         path === 'seller' && (
           <span data-testid={ `${path}_orders__element-card-address-${id}` }>

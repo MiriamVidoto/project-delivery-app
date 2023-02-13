@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import '../style/sellerOrderDetails.css';
 
 export default function OrderDetailsCard({ path, productsData, total }) {
   const prefix = `${path}_order_details__element-order-`;
 
   return (
-    <div>
+    <div className="component-order-details">
       <table>
         <thead>
           <tr>

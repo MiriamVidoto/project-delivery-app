@@ -4,6 +4,7 @@ import moment from 'moment';
 import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
+import '../style/sellerOrderDetails.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';
 import updateStatus from '../api/updateSale';
 
@@ -46,7 +47,7 @@ export default function SellerOrderDetails() {
   };
 
   return (
-    <div>
+    <div className="page-seller-order-details">
       <NavBar path={ path } name={ user.name } />
       {order && (
         <div>

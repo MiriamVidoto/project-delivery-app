@@ -1,8 +1,9 @@
 import { validate } from 'email-validator';
-import React, { useState, useEffect } from 'react';
-import NavBar from '../components/navbar';
-import { getDataFromLocalStorage } from '../utils/localStorage';
+import React, { useEffect, useState } from 'react';
 import postRegisterAdmin from '../api/adminRegister';
+import NavBar from '../components/navbar';
+import '../style/adminManage.css';
+import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function AdminManage() {
   const [name, setName] = useState('');
@@ -53,10 +54,10 @@ export default function AdminManage() {
   };
 
   return (
-    <div>
+    <div className="page-adminManage">
       <NavBar path="admin" name={ user.name } />
-      <h1>Cadastrar novo usuário</h1>
-      <form>
+      <form className="form-admin">
+        <h1>Cadastrar novo usuário</h1>
         <label htmlFor="name">
           Nome
           <input
@@ -97,6 +98,7 @@ export default function AdminManage() {
             data-testid="admin_manage__select-role"
             value={ role }
             onChange={ (e) => setRole(e.target.value) }
+            className="select-options"
           >
             <option value="seller">Vendedor</option>
             <option value="customer">Cliente</option>
@@ -108,6 +110,7 @@ export default function AdminManage() {
           data-testid="admin_manage__button-register"
           disabled={ !register() }
           onClick={ () => createRegisterByAdmin() }
+          className="button-cadastrar"
         >
           Cadastrar
         </button>
