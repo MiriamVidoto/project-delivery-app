@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import '../style/navBar.css';
+import { useHistory } from 'react-router-dom';
 
 export default function NavBar({ path, name }) {
   const history = useHistory();
@@ -18,59 +17,61 @@ export default function NavBar({ path, name }) {
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-products"
-            onClick={ () => history.push('/products') }
             className="button-navBar"
+            onClick={ () => history.push('/customer/products') }
           >
             Produtos
           </button>
           <button
             type="button"
             data-testid="customer_products__element-navbar-link-orders"
-            onClick={ () => history.push('') }
             className="button-navBar"
+            onClick={ () => history.push('/customer/orders') }
           >
             Meus pedidos
           </button>
         </>
+      ) }
+      { path === 'seller' && (
+        <button
+          type="button"
+          data-testid="customer_products__element-navbar-link-orders"
+          onClick={ () => history.push('/seller/orders') }
+        >
+          PEDIDOS
+        </button>
       )}
-      <div className="header-seller-orders">
-        { path === 'seller' && (
-          <Link
-            to="/seller/orders"
+      { path === 'admin' && (
+        <span data-testid="customer_products__element-navbar-link-orders">
+          GERENCIAR USUÁRIOS
+        </span>
+      )}
+      <div className="header-nav-bar-admin">
+        { path === 'admin' && (
+          <span
             data-testid="customer_products__element-navbar-link-orders"
+            className="tittle-admin"
           >
-            <h1>  PEDIDOS </h1>
-          </Link>
+            <h1>GERENCIAR USUÁRIOS</h1>
+          </span>
         )}
-
-        <div className="header-nav-bar-admin">
-          { path === 'admin' && (
-            <span
-              data-testid="customer_products__element-navbar-link-orders"
-              className="tittle-admin"
-            >
-              <h1>GERENCIAR USUÁRIOS</h1>
-            </span>
-          )}
-          <div className="buttons-nav-bar">
-            <button
-              type="button"
-              data-testid="customer_products__element-navbar-user-full-name"
-              onClick={ () => history.push('') }
-              className="button-navBar"
-            >
-              {name}
-            </button>
-
-            <button
-              type="button"
-              data-testid="customer_products__element-navbar-link-logout"
-              onClick={ () => logout() }
-              className="button-navBar"
-            >
-              Sair
-            </button>
-          </div>
+        <div className="buttons-nav-bar">
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-user-full-name"
+            onClick={ () => history.push('') }
+            className="button-navBar"
+          >
+            {name}
+          </button>
+          <button
+            type="button"
+            data-testid="customer_products__element-navbar-link-logout"
+            onClick={ () => logout() }
+            className="button-navBar"
+          >
+            Sair
+          </button>
         </div>
       </div>
     </header>

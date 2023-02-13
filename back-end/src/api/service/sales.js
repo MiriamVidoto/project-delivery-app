@@ -1,4 +1,4 @@
-const { Sale, SaleProducts } = require('../../database/models');
+const { Sale, SaleProducts, User, Products } = require('../../database/models');
 
 const checkoutSale = async (data) => {
 const { userId, sellerId, totalPrice, deliveryAddress, deliveryNumber, products } = data;
@@ -43,14 +43,25 @@ const orderDetails = async (id) => {
   if (!sale) {
     return { status: 404, message: 'sale not found' };
   }
+  const { name } = await User.findOne(
+    { where: { id: sale.sellerId }, raw: true },
+  );
+  const sellerName = name;
 
   const products = await SaleProducts.findAll(
-    { where: { saleId: sale.id },
-      raw: true,
-    },
-    );
+    { where: { saleId: sale.id }, include: [{ model: Products, as: 'products' }] },
+  );
+  return { status: 200, message: { ...sale, sellerName, products } };
+};
 
-  return { status: 200, message: { ...sale, products } };
+const updateStatusSale = async (sale) => {
+  const { id, status } = sale;
+  const newSale = await Sale.update(
+    { status },
+    { where: { id } },
+  );
+  if (newSale) return { status: 201, message: newSale };
+  return { status: 404, message: 'Failed' };
 };
 
 module.exports = {
@@ -58,4 +69,5 @@ module.exports = {
     ordersSeller,
     ordersCustomer,
     orderDetails,
+    updateStatusSale,
 };
