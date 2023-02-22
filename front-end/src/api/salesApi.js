@@ -48,10 +48,10 @@ export const getSalesDetails = async (id, token) => {
   }
 };
 
-export const updateSales = async (id, data, token) => {
+export const updateSales = async (data, token) => {
   try {
     const response = await API
-      .put(`/sales${id}`, data, { headers: { authorization: token } });
+      .put('/sales', data, { headers: { authorization: token } });
     return response.data;
   } catch (error) {
     console.log(error);

@@ -38,13 +38,11 @@ export default function CustomerOrderDetails() {
   return (
     <div className="page-order-details">
       <div className="customer-order-details">
-        <h1>Details</h1>
         <NavBar path={ path } name={ user.name } />
       </div>
       { order && (
         <>
           <div className="customer-details-topo">
-            <h1>Detalhe do pedido</h1>
             <div className="details-order">
               <span
                 data-testid={ `${prefix}element-order-details-label-order-${order.id}` }

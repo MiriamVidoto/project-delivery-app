@@ -33,13 +33,8 @@ export default function SellerOrders() {
     <div className="page-seller-orders">
       <NavBar path={ path } name={ user.name } />
       { sales && (
-        <div className="orderCards">
-          Pedidos
-          {
-            sales.slice(0, LIMIT)
-              .map((e) => <OrderCard order={ e } path={ path } key={ e.id } />)
-          }
-        </div>
+        sales.slice(0, LIMIT)
+          .map((e) => <OrderCard order={ e } path={ path } key={ e.id } />)
       )}
     </div>
   );

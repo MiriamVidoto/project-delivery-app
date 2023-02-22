@@ -7,10 +7,10 @@ export default function OrderCard({ order, path }) {
   const { id, status, saleDate, totalPrice, deliveryAddress, deliveryNumber } = order;
 
   return (
-    <Link to={ `/${path}/orders/${id}` }>
-      <span data-testid={ `${path}_orders__element-order-id-${id}` }>
+    <Link className="orderCards" to={ `/${path}/orders/${id}` }>
+      <h4 data-testid={ `${path}_orders__element-order-id-${id}` }>
         {`Pedido ${id}`}
-      </span>
+      </h4>
       <span data-testid={ `${path}_orders__element-delivery-status-${id}` }>
         {status}
       </span>
@@ -20,7 +20,6 @@ export default function OrderCard({ order, path }) {
       <span data-testid={ `${path}_orders__element-card-price-${id}` }>
         {totalPrice.replace(/\./, ',')}
       </span>
-      <br />
       {
         path === 'seller' && (
           <span data-testid={ `${path}_orders__element-card-address-${id}` }>

@@ -17,11 +17,19 @@ span {
   border-radius: 4px;
   display: flex;
   flex-direction: column;
-  gap: 15px;
-  height: 120px;
+  gap: 2px;
   justify-content: center;
-  width: 150px;
+  margin: 5px;
+  padding: 10px;
+  text-decoration: none;
+  width: 600px;
 }
+
+.orderCards h4 {
+  color: rgb(178, 135, 135);
+  margin: 0;
+}
+
 
 .header-seller-orders {
   align-items: center;

@@ -7,10 +7,7 @@ function Home() {
   const history = useHistory();
 
   const path = () => {
-    const user = localStorage.getItem('user');
-    if (!user) {
-      history.push('/login');
-    }
+    history.push('/login');
   };
 
   useEffect(() => {

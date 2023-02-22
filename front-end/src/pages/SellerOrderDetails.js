@@ -20,7 +20,6 @@ export default function SellerOrderDetails() {
   const prefix = 'seller_order_details__';
 
   const verifyStatus = (status) => {
-    console.log(status);
     if (status === 'Pendente') setPreparing(false);
     if (status === 'Preparando') {
       setPreparing(true);
@@ -46,12 +45,11 @@ export default function SellerOrderDetails() {
   };
 
   return (
-    <div className="page-seller-order-details">
+    <div className="page-order-details">
       <NavBar path={ path } name={ user.name } />
       {order && (
         <div>
-          <h1> Detalhes do pedido </h1>
-          <div>
+          <div className="customer-order-details">
             <span data-testid={ `${prefix}element-order-details-label-order-id` }>
               {` Pedido ${order.id}`}
             </span>

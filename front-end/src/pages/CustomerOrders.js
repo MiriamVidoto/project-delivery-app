@@ -21,11 +21,10 @@ export default function CustomerOrders() {
   }, []);
 
   return (
-    <div>
+    <div className="page-seller-orders">
       <NavBar path={ path } name={ user.name } />
       { sales && (
-        <div className="orderCards">
-          Pedidos
+        <div>
           {
             sales.slice(0, LIMIT)
               .map((e) => <OrderCard order={ e } path={ path } key={ e.id } />)
