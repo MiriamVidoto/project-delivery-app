@@ -1,7 +1,7 @@
 import { validate } from 'email-validator';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import postRegister from '../api/register';
+import { postRegister } from '../api/usersApi';
 import '../style/register.css';
 import { setDataToLocalStorage } from '../utils/localStorage';
 

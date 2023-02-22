@@ -1,7 +1,7 @@
 import { validate } from 'email-validator';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import postLogin from '../api/login';
+import { postLogin } from '../api/usersApi';
 import logo from '../images/Delivery.png';
 import '../style/login.css';
 import { setDataToLocalStorage, getDataFromLocalStorage } from '../utils/localStorage';
@@ -38,26 +38,6 @@ export default function Login() {
     const numberSix = 6;
     return validate(userEmail) && password.length >= numberSix;
   };
-
-  // const redirect2 = (role) => {
-  //   if (role === 'customer') {
-  //     history.push('/customer/orders');
-  //   }
-  //   if (role === 'seller') {
-  //     history.push('/seller/orders');
-  //   }
-  //   if (role === 'administrator') {
-  //     history.push('/admin/manage');
-  //   }
-  // };
-
-  //   useEffect(() => {
-  //     const user = getDataFromLocalStorage('user');
-  //     if (user) {
-  //       const { role } = user;
-  //       redirect(role);
-  //     }
-  //   }, []);
 
   const validateLogin = async (newPost) => {
     const sucess = 200;

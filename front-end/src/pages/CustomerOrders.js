@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getCostumerOrders from '../api/costumerOrders';
+import { getSalesCustomer } from '../api/salesApi';
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
 import { getDataFromLocalStorage } from '../utils/localStorage';
@@ -12,7 +12,7 @@ export default function CustomerOrders() {
   const user = getDataFromLocalStorage('user');
 
   const getDatas = async () => {
-    const saleData = await getCostumerOrders(user.id);
+    const saleData = await getSalesCustomer(user.id);
     setSales(saleData);
   };
 

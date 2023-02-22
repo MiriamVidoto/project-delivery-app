@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import moment from 'moment';
-import getOrderDetails from '../api/orderDetails';
 import NavBar from '../components/navbar';
 import OrderDetailsCard from '../components/OrderDetailsCard';
-import '../style/sellerOrderDetails.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';
-import updateStatus from '../api/updateSale';
+import { updateSales, getSalesDetails } from '../api/salesApi';
+import '../style/sellerOrderDetails.css';
 
 export default function SellerOrderDetails() {
   const [order, setOrder] = useState();
@@ -30,7 +29,7 @@ export default function SellerOrderDetails() {
   };
 
   const getDatas = async () => {
-    const orderData = await getOrderDetails(id);
+    const orderData = await getSalesDetails(id);
     const { products, status } = orderData;
     setSaleProducts(products);
     verifyStatus(status);
@@ -42,7 +41,7 @@ export default function SellerOrderDetails() {
   }, [reload]);
 
   const handleClick = (status) => {
-    updateStatus({ id: order.id, status });
+    updateSales({ id: order.id, status });
     setReload(!reload);
   };
 

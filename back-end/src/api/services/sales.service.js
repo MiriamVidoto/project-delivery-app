@@ -43,15 +43,17 @@ const orderDetails = async (id) => {
   if (!sale) {
     return { status: 404, message: 'sale not found' };
   }
-  const { name } = await User.findOne(
+  const sellerName = sale.sellerId
+  ? await User.findOne(
     { where: { id: sale.sellerId }, raw: true },
-  );
-  const sellerName = name;
+  ).name
+  : null;
+
 
   const products = await SaleProducts.findAll(
     { where: { saleId: sale.id }, include: [{ model: Products, as: 'products' }] },
   );
-  return { status: 200, message: { ...sale, sellerName, products } };
+  return { status: 200, message: { ...sale, sellerName , products } };
 };
 
 const updateStatusSale = async (sale) => {

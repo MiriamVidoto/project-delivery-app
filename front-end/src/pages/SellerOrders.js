@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import getSellerOrders from '../api/sellerOrders';
+import { getSalesSeller } from '../api/salesApi';
 import NavBar from '../components/navbar';
 import OrderCard from '../components/OrderCard';
 import '../style/sellerOrders.css';
@@ -14,14 +14,14 @@ export default function SellerOrders() {
 
   useEffect(() => {
     async function getSales() {
-      const orderSales = await getSellerOrders(user.id);
+      const orderSales = await getSalesSeller(user.id);
       setSales(orderSales);
     }
     getSales();
   }, []);
 
   const getDatas = async () => {
-    const saleData = await getSellerOrders(user.id);
+    const saleData = await getSalesSeller(user.id);
     setSales(saleData);
   };
 

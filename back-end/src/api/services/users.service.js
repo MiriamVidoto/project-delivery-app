@@ -1,5 +1,18 @@
 const { User } = require('../../database/models');
 
+const login = async (body) => {
+  const { email } = body;
+  const user = await User.findOne({
+    where: { email },
+    atributes: ['email', 'password'],
+    raw: true,
+  });
+  if (!user) {
+    return { status: 404, message: 'User not found' };
+  }
+  return { status: 200, message: user };
+};
+
 const getSellers = async () => {
   const sellers = await User.findAll({
     where: { role: 'seller' },
@@ -50,6 +63,7 @@ const adminRegister = async (token, data) => {
 };
 
 module.exports = {
+  login,
   getSellers,
   adminRegister,
   register,

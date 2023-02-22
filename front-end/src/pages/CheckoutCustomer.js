@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import postSales from '../api/sales';
-import getSellers from '../api/sellers';
+import { postSales } from '../api/salesApi';
+import { getSellers } from '../api/usersApi';
 import CheckoutCard from '../components/CheckoutCard';
 import NavBar from '../components/navbar';
 import '../style/customerCheckout.css';
@@ -9,7 +9,7 @@ import { getDataFromLocalStorage } from '../utils/localStorage';
 
 export default function CheckoutCustomer() {
   const [user, setUser] = useState({ name: '' });
-  const [sellers, setSellers] = useState([{ name: '', id: '' }]);
+  const [sellers, setSellers] = useState([]);
   const [sellerSelected, setSellerSelected] = useState(null);
   const [totalPriceCart, setTotalPriceCart] = useState(0);
   const [address, setAddress] = useState('');
@@ -54,7 +54,7 @@ export default function CheckoutCustomer() {
     const userData = getDataFromLocalStorage('user');
     if (user) setUser(userData);
     const sellersData = await getSellers();
-    if (sellers) setSellers(sellersData);
+    if (sellersData) setSellers(sellersData);
     setDatasLocalStorage();
   };
 
@@ -69,9 +69,7 @@ export default function CheckoutCustomer() {
 
       <h3> Detalhes e Endereço para Entrega</h3>
       <div className="form-customer-checkout">
-
         <label htmlFor="select">
-          {' '}
           Vendedor
           <select
             id="select"
@@ -83,19 +81,13 @@ export default function CheckoutCustomer() {
             <option value="" disabled selected>
               Selecione um vendedor
             </option>
-            {
-              sellers.map((seller) => (
-                <option
-                  key={ seller.id }
-                  value={ seller.id }
-                >
-                  { seller.name }
-                </option>
-              ))
-            }
+            {sellers.map((seller) => (
+              <option key={ seller.id } value={ seller.id }>
+                {seller.name}
+              </option>
+            ))}
           </select>
         </label>
-
         <label htmlFor="inputText">
           Endereço
           <input
@@ -118,7 +110,6 @@ export default function CheckoutCustomer() {
           />
         </label>
       </div>
-      <h4>Finalizar Pedido</h4>
       <CheckoutCard />
       <button
         type="button"

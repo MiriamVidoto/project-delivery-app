@@ -1,6 +1,6 @@
 import { validate } from 'email-validator';
 import React, { useEffect, useState } from 'react';
-import postRegisterAdmin from '../api/adminRegister';
+import { postRegisterAdmin } from '../api/usersApi';
 import NavBar from '../components/navbar';
 import '../style/adminManage.css';
 import { getDataFromLocalStorage } from '../utils/localStorage';

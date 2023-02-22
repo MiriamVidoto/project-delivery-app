@@ -43,12 +43,14 @@ export default function CheckoutCard() {
     <div className="checkout-card">
       <table id="table">
         <thead>
-          <th>Item</th>
-          <th>Descrição</th>
-          <th>Quantidade</th>
-          <th>Valor Unitário</th>
-          <th>Sub-total</th>
-          <th>Remover item</th>
+          <tr>
+            <th>Item</th>
+            <th>Descrição</th>
+            <th>Quantidade</th>
+            <th>Valor Unitário</th>
+            <th>Sub-total</th>
+            <th>Remover item</th>
+          </tr>
         </thead>
         <tbody>
           {
@@ -89,18 +91,20 @@ export default function CheckoutCard() {
                 >
                   {product.subTotal}
                 </td>
-                <button
-                  type="button"
-                  data-testid={
-                    `customer_checkout__element-order-table-remove-${index}`
-                  }
-                  id={ product.productId }
-                  onClick={ (e) => {
-                    removeFromCart(e);
-                  } }
-                >
-                  Remover
-                </button>
+                <td>
+                  <button
+                    type="button"
+                    data-testid={
+                      `customer_checkout__element-order-table-remove-${index}`
+                    }
+                    id={ product.productId }
+                    onClick={ (e) => {
+                      removeFromCart(e);
+                    } }
+                  >
+                    Remover
+                  </button>
+                </td>
               </tr>
             ))
           }

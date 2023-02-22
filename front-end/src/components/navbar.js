@@ -42,19 +42,15 @@ export default function NavBar({ path, name }) {
         </button>
       )}
       { path === 'admin' && (
-        <span data-testid="customer_products__element-navbar-link-orders">
+        <button
+          type="button"
+          data-testid="customer_products__element-navbar-link-orders"
+          className="button-navBar"
+        >
           GERENCIAR USUÁRIOS
-        </span>
+        </button>
       )}
       <div className="header-nav-bar-admin">
-        { path === 'admin' && (
-          <span
-            data-testid="customer_products__element-navbar-link-orders"
-            className="tittle-admin"
-          >
-            <h1>GERENCIAR USUÁRIOS</h1>
-          </span>
-        )}
         <div className="buttons-nav-bar">
           <button
             type="button"

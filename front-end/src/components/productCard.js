@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import getCostumerProducts from '../api/costumerProducts';
+import { getProducts } from '../api/productsApi';
 import { getData, setData } from '../helpers/localStorage';
 import '../style/products.css';
 
@@ -15,7 +15,7 @@ function ProductCard() {
   useEffect(() => {
     // gerencia estado inicial
     async function fetchData() {
-      const data = await getCostumerProducts();
+      const data = await getProducts();
       setProducts(data);
       setQuantities(data.map(() => 0));
       setTotalPrices(data.map((product) => product.price * 0));
