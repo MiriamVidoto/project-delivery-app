@@ -12,15 +12,15 @@
   
   (1) A pessoa cliente, que compra da lista de produtos;
 
-    ![img](./delivery-customer.gif)
+    ![img](./gifs/delivery-customer.gif)
   
   (2) A pessoa vendedora, que aprova, prepara e entrega;
 
-    ![img](./delivery-seller.gif)
+    ![img](./gifs/delivery-seller.gif)
   
   (3) A pessoa administradora, que gerencia quem usa o aplicativo;
 
-    ![img](./delivery--adm.gif)
+    ![img](./gifs/delivery--adm.gif)
 
   
   - Fazer a comunicação entre clientes e pessoas vendedoras: a pessoa cliente faz o pedido via "carrinho de compras" e a pessoa vendedora aprova, prepara e envia esse pedido. Quando o produto é recebido por quem comprou, essa pessoa marca o pedido como "recebido". Ambos devem possuir detalhes sobre seus pedidos;
