@@ -2,6 +2,8 @@
 
 **Este foi um projeto em grupo realizado durante o meu curso na Trybe, onde foi desenvolvido um app de delivery para uma distribuidora de bebidas.**
 
+<img src="https://img.shields.io/github/repo-size/MiriamVidoto/project-delivery-app?color=3B82F6"> <img src="https://img.shields.io/github/languages/count/MiriamVidoto/project-delivery-app?color=3B82F6"> <img src="https://img.shields.io/github/last-commit/MiriamVidoto/project-delivery-app?color=3B82F6"> 
+
   A distribuidora de cervejas da dona Tereza está se informatizando! 🚀 Seu negócio, antes focado em um local específico da cidade, passou a receber uma quantidade massiva de encomendas de outros pontos, expandindo sua atuação via delivery. Isso tudo graças ao excelente preço das bebidas e atendimento da equipe de vendas.
 
   Agora a distribuidora possui alguns pontos de venda na cidade para agilizar no atendimento dessas áreas. Cada ponto de venda, por sua vez, possui uma pessoa vendedora responsável.
