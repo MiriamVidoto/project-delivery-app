@@ -9,10 +9,10 @@ export default function AdminManage() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [role, setRole] = useState('');
+  const [role, setRole] = useState('seller');
   const [response, setResponse] = useState('');
   const [reset, setReset] = useState(false);
-  const [message, setMessage] = useState('seller');
+  const [message, setMessage] = useState('');
 
   const user = getDataFromLocalStorage('user');
 
